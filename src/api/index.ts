@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as port from "./port/index"
 import request from "../utils/request"
 
@@ -28,32 +27,6 @@ export let getQuestionsType = ()=>{
 export let insertQuestionsType = (params: object)=>{
   return request.get(port.insertQuestionsType,{params});
 }
-=======
-import * as port from "./port/index"
-import request from "../utils/request"
-
-
-
-// 获取试题
-export let getQuestion = (params: object)=>{
-  return request.get(port.getQuestion, {params});
-}
-
-// 获取课程安排
-export let getSubject = ()=>{
-  return request.get(port.getSubject);
-}
-
-// 获取考试类型
-export let getExamType = ()=>{  
-  return request.get(port.getExamType);
-}
-
-// 获取考试类型
-export let getQuestionsType = ()=>{
-  return request.get(port.getQuestionsType);
-}
-
 //获取班级管理
 export let getmangergrade = ()=>{
   return request.get(port.getmangergrade);
@@ -68,4 +41,3 @@ export let getmangerroom = ()=>{
 export let getmangerstudentnew = ()=>{
   return request.get(port.getmangerstudentnew);
 }
->>>>>>> 75de82662435c15033062cbce8cb24df30c0c742
