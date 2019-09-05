@@ -14,11 +14,26 @@ export let getSubject = ()=>{
 }
 
 // 获取考试类型
-export let getExamType = ()=>{
+export let getExamType = ()=>{  
   return request.get(port.getExamType);
 }
 
 // 获取考试类型
 export let getQuestionsType = ()=>{
   return request.get(port.getQuestionsType);
+}
+
+//获取班级管理
+export let getmangergrade = ()=>{
+  return request.get(port.getmangergrade);
+}
+
+//获取教室管理
+export let getmangerroom = ()=>{
+  return request.get(port.getmangerroom);
+}
+
+//获取没有分配教室的班级
+export let getmangerstudentnew = ()=>{
+  return request.get(port.getmangerstudentnew);
 }

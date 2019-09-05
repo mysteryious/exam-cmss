@@ -12,7 +12,7 @@ interface PropInto {
 @inject("watchquestions")
 @observer
 
-
+    
 
 
 class watchQuestions extends React.Component<PropInto>{

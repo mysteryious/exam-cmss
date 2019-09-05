@@ -11,5 +11,12 @@ export const getExamType = '/exam/examType'
 
 // 获取考试类型
 export const getQuestionsType = '/exam/getQuestionsType'
+  
+//获取已经分配教室的班级
+export const getmangergrade = '/manger/grade'
 
+//获取全部教室
+export const getmangerroom = '/manger/room'
 
+//获取没有分配教室的班级
+export const getmangerstudentnew = '/manger/student/new'

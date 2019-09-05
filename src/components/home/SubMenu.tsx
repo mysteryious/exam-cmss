@@ -63,7 +63,7 @@ const menuList = [
         title: "试卷列表"
       }
     ]
-  },
+  },  
   {
     id: 4,
     key: "sub4",
