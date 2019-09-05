@@ -1,0 +1,31 @@
+{
+  "defaultSeverity": "none",
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js"
+    ]
+  },
+  "noImplicitAny": false,
+  "strict": false,
+  "rules": {
+    "ordered-imports": false,
+    "no-console": [
+      false
+    ],
+    "only-arrow-functions": [
+      false
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "no-empty": false
+  }
+}

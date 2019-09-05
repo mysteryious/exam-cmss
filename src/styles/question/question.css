@@ -1,0 +1,16 @@
+.question .main {
+  padding: 24px;
+  margin: 0px 0px 20px;
+  border-radius: 10px;
+}
+
+.question .main .ant-btn {
+  padding: 0 40px !important;
+  border-radius: 4px !important;
+  border: 0 !important;
+  height: 40px;
+  font-size: 14px !important;
+  color: #fff !important;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+  margin-bottom: 25px;
+}

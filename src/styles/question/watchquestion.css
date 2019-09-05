@@ -1,0 +1,60 @@
+.top{
+  background: rgb(255, 255, 255);
+  padding: 24px;
+  margin: 0px 0px 20px;
+  border-radius: 10px;
+}
+
+.top-item{
+  width: 100%;
+  display: flex;
+}
+
+.left{
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.left>span{
+  padding: 5px 0;
+}
+.left-two{
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.right-one{
+  flex: 9;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: wrap row;
+}
+.right-one span{
+  padding: 5px 8px;
+  cursor: pointer;
+}
+.right{
+  flex: 9;
+  display: flex;
+}
+.right>.item{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 10px;
+  margin: 10px 0;
+}
+.right>.item>p{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+.right>.item:nth-child(2){
+  margin-right: 15px;
+}
+.active{
+  color: red;
+}
