@@ -14,7 +14,6 @@ interface PropInto {
 
 
 
-
 class watchQuestions extends React.Component<PropInto>{
 
   constructor(props: any) {

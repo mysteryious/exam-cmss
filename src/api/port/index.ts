@@ -9,7 +9,8 @@ export const getSubject = '/exam/subject'
 // 获取考试类型
 export const getExamType = '/exam/examType'
 
-// 获取考试类型
+// 获取题目类型
 export const getQuestionsType = '/exam/getQuestionsType'
 
-
+// 添加试题类型
+export const insertQuestionsType="/exam/insertQuestionsType"

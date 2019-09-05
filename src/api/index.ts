@@ -18,7 +18,12 @@ export let getExamType = ()=>{
   return request.get(port.getExamType);
 }
 
-// 获取考试类型
+//  获取题目类型
 export let getQuestionsType = ()=>{
   return request.get(port.getQuestionsType);
+}
+
+// 添加试题类型
+export let insertQuestionsType = (params: object)=>{
+  return request.get(port.insertQuestionsType,{params});
 }
