@@ -19,7 +19,7 @@ export let getExamType = ()=>{
   return request.get(port.getExamType);
 }
 
-
+ 
 // 添加试题类型
 export let insertQuestionsType = (params: object)=>{
   return request.get(port.insertQuestionsType,{params});
@@ -43,4 +43,28 @@ export let getmangerroom = ()=>{
 //获取没有分配教室的班级
 export let getmangerstudentnew = ()=>{
   return request.get(port.getmangerstudentnew);
+}
+
+//获取所有的课程
+export let getexamsubject = ()=>{
+  return request.get(port.getexamsubject);
+}
+
+
+
+//添加教室号接口
+export let addmangerroom = (params:object)=>{
+  return request.post(port.addmangerroom,params);
+}
+
+//删除教室号接口
+export let deletemangerroom = (params:object)=>{
+  console.log(params,"这是api删除教室")
+  return request.delete(port.deletemangerroom,{data:params});
+}
+
+
+//添加班级接口
+export let addmangergrade = (params:object)=>{
+  return request.post(port.addmangergrade,params);
 }
