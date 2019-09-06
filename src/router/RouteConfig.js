@@ -34,6 +34,14 @@ const RouteConfig = [
         component: React.lazy(() => import("@/views/main/classManagement/student")),
         path: "/main/student",
       },
+      {//添加考试
+        component: React.lazy(() => import("@/views/main/classExam/addExam")),
+        path: "/main/addExam",
+      },
+      {//试卷列表
+        component: React.lazy(() => import("@/views/main/classExam/examList")),
+        path: "/main/examList",
+      },
       {
         path: "/main",
         redirect: "/main/questionsType"

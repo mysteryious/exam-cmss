@@ -18,7 +18,7 @@ class ClassMangement extends React.Component<Props> {
   //删除教室号
   public deleteRoom =async (text:any, record:any)=>{
     const subject = await this.props.room.deletemangerroom({room_id:text.room_id});
-    // this.getList()
+    this.getList()
   }
   public getList = async () => {
     //获取全部教室

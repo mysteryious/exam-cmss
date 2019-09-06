@@ -60,7 +60,8 @@ const menuList = [
       },
       {
         id: 2,
-        title: "试卷列表"
+        title: "试卷列表",
+        to:'/main/examList',
       }
     ]
   },
@@ -95,7 +96,8 @@ const menuList = [
     child: [
       {
         id: 1,
-        title: "待批班级"
+        title: "待批班级",
+        to:'/main/vip'
       }
     ]
   }
@@ -130,7 +132,7 @@ class MenuComponent extends React.Component {
               {
                 item.child && item.child.map((i, ind) => {
                   return <Menu.Item key={ind}>
-                    {i.to ? <NavLink to={i.to}>{i.title}</NavLink> : i.to}
+                    <NavLink to={i.to}>{i.title}</NavLink>
                   </Menu.Item>
                 })
               }

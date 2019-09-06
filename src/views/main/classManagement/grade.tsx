@@ -103,7 +103,7 @@ class ClassMangement extends React.Component<Props> {
   public render() {
     let { data,examsubjectArr ,subjectAll,disabled} = this.state;
  
-    // console.log(data)
+    console.log(data)
     // console.log(examsubjectArr)
     // console.log(subjectAll)
     
