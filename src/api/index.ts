@@ -77,3 +77,8 @@ export let deletemangerroom = (params:object)=>{
 export let addmangergrade = (params:object)=>{
   return request.post(port.addmangergrade,params);
 }
+
+//获取考试类型
+export let getexamType = ()=>{
+  return request.get(port.getexamType);
+}

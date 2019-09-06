@@ -12,7 +12,7 @@ export const getExamType = '/exam/examType'
 //获取考试题目类型
 export const getQuestionsType = '/exam/getQuestionsType'
 
-// 添加试题类型
+// 添加试题类型  
 export const insertQuestionsType="/exam/insertQuestionsType"
   
 //用于获取所有的试题
@@ -63,3 +63,7 @@ export const deletemangerroom = '/manger/room/delete'
 
 //添加班级接口
 export const addmangergrade = '/manger/grade'
+
+
+//获取考试类型
+export const getexamType = '/exam/examType'
