@@ -6,6 +6,10 @@ const RouteConfig = [
     component: React.lazy(() => import("@/views/main/home")),
     path: "/main",
     children: [
+      {//添加试题
+        component: React.lazy(() => import("@/views/main/question/addQuestions")),
+        path: "/main/addQuestions",
+      },
       {//试题分类
         component: React.lazy(() => import("@/views/main/question/questionsType")),
         path: "/main/questionsType",
@@ -14,7 +18,11 @@ const RouteConfig = [
         component: React.lazy(() => import("@/views/main/question/watchQuestions")),
         path: "/main/watchQuestions",
       },
-       {//班级管理
+      {//查看试题详情
+        component: React.lazy(() => import("@/views/main/question/questionDetail")),
+        path: "/main/question/detail/:id",
+      },
+      {//班级管理
         component: React.lazy(() => import("@/views/main/classManagement/grade")),
         path: "/main/grade",
       },
@@ -29,7 +37,7 @@ const RouteConfig = [
       {
         path: "/main",
         redirect: "/main/questionsType"
-      } 
+      }
     ]
   },
   {

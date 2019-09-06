@@ -113,7 +113,7 @@ class questionsType extends React.Component<PropInto>{
           <Button type='primary' icon='plus' onClick={this.showModal}>
             添加类型
 					</Button>
-          <Table columns={columns} dataSource={dataSource} pagination={false} />
+          <Table columns={columns} dataSource={dataSource} pagination={false} rowKey="questions_type_sort"/>
         </div>
 
 

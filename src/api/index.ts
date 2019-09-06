@@ -18,7 +18,7 @@ export let getExamType = ()=>{
   return request.get(port.getExamType);
 }
 
-//  获取题目类型
+// 获取考试题目类型
 export let getQuestionsType = ()=>{
   return request.get(port.getQuestionsType);
 }
@@ -27,6 +27,17 @@ export let getQuestionsType = ()=>{
 export let insertQuestionsType = (params: object)=>{
   return request.get(port.insertQuestionsType,{params});
 }
+
+//获取所有的试题
+export let getQuestions=()=>{
+  return request.get(port.getQuestions)
+}
+
+//用于获取某个试题详情
+export let questionDetail=(params: object)=>{
+  return request.get(port.questionDetail,{params})
+}
+
 //获取班级管理
 export let getmangergrade = ()=>{
   return request.get(port.getmangergrade);

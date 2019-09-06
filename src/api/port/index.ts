@@ -9,12 +9,19 @@ export const getSubject = '/exam/subject'
 // 获取考试类型
 export const getExamType = '/exam/examType'
 
-// 获取题目类型
+//获取考试题目类型
 export const getQuestionsType = '/exam/getQuestionsType'
 
 // 添加试题类型
 export const insertQuestionsType="/exam/insertQuestionsType"
   
+//用于获取所有的试题
+export const getQuestions="/exam/questions/new"
+
+//用于获取某个试题详情
+export const questionDetail="/exam/questions/condition"
+
+
 //获取已经分配教室的班级
 export const getmangergrade = '/manger/grade'
 

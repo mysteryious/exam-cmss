@@ -1,5 +1,5 @@
 import { observable, action } from "mobx"
-import { getQuestion, insertQuestionsType } from "@/api/index"
+import { getQuestion, insertQuestionsType ,questionDetail} from "@/api/index"
 
 
 class question {
@@ -12,6 +12,12 @@ class question {
   //添加试题分类
   @action async insertQuestionsType(params:any): Promise<any> {
     let result: any = await insertQuestionsType(params);
+    return result
+  }
+
+  //获取试题详情
+  @action async questionDetail(params:any): Promise<any> {
+    let result: any = await questionDetail(params);
     return result
   }
 }

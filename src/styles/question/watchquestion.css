@@ -1,60 +1,96 @@
-.top{
+.top {
   background: rgb(255, 255, 255);
   padding: 24px;
   margin: 0px 0px 20px;
   border-radius: 10px;
 }
 
-.top-item{
+.top-item {
   width: 100%;
   display: flex;
 }
 
-.left{
+.left {
   flex: 1;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
 }
-.left>span{
+.left > span {
   padding: 5px 0;
 }
-.left-two{
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.right-one{
+
+.right-one {
   flex: 9;
   display: flex;
   justify-content: flex-start;
   flex-flow: wrap row;
 }
-.right-one span{
+.right-one span {
   padding: 5px 8px;
   cursor: pointer;
 }
-.right{
+.right {
   flex: 9;
   display: flex;
 }
-.right>.item{
+.right > .item {
   display: flex;
   justify-content: flex-start;
   padding-right: 10px;
   margin: 10px 0;
 }
-.right>.item>p{
+.right > .item>span {
+  line-height: 32px;
+  margin-right: 3px;
+}
+.right > .item > p {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 10px;
 }
-.right>.item:nth-child(2){
+.right > .item:nth-child(2) {
   margin-right: 15px;
 }
-.active{
+.active {
   color: red;
+}
+.ant-list-item-meta-description span{
+  list-style: none;
+  display: inline-block;
+  line-height: 20px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  margin-right: 8px;
+  margin-top: 10px;
+}
+
+.ant-list-item-meta-description span:nth-child(1) {
+  color: #1890ff;
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.ant-list-item-meta-description span:nth-child(2) {
+  color: #2f54eb;
+  background: #f0f5ff;
+  border-color: #adc6ff;
+}
+.ant-list-item-meta-description span:nth-child(3) {
+  color: #fa8c16;
+  background: #fff7e6;
+  border-color: #ffd591;
+}
+.ant-btn-primary {
+  height: 30px;
+  padding: 0 40px !important;
+  border-radius: 4px !important;
+  border: 0 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
 }
