@@ -60,7 +60,7 @@ const menuList = [
       },
       {
         id: 2,
-        title: "试卷列表"
+        title: "试卷列表",
       }
     ]
   },

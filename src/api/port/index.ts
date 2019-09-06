@@ -36,6 +36,24 @@ export const getexamsubject = '/exam/subject'
 
 
 
+//展示用户数据
+export const showUser="/user/user"
+//展示身份数据
+export const showIdentity="/user/identity"
+//添加api接口权限
+export const authorityApi="/user/api_authority"
+//展示身份和api权限关系
+export const identity_api_authority_relation="/user/identity_api_authority_relation"
+//获取视图权限数据
+export const view_authority="/user/view_authority"
+//展示身份和视图权限关系
+export const identity_view_authority_relation="/user/identity_view_authority_relation"
+
+
+
+
+
+
 //添加教室号接口
 export const addmangerroom = '/manger/room'
 

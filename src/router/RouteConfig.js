@@ -22,6 +22,17 @@ const RouteConfig = [
         component: React.lazy(() => import("@/views/main/question/questionDetail")),
         path: "/main/question/detail/:id",
       },
+
+      {//添加用户
+        component: React.lazy(() => import("@/views/main/user/addUser")),
+        path: "/main/addUser",
+      },
+      {//用户展示
+        component: React.lazy(() => import("@/views/main/user/showUser")),
+        path: "/main/showUser",
+      },
+
+
       {//班级管理
         component: React.lazy(() => import("@/views/main/classManagement/grade")),
         path: "/main/grade",

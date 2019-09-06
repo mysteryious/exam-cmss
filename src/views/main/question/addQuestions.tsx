@@ -90,7 +90,7 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <h3>题目信息</h3>
               <p>题干</p>
-              <Input placeholder="请输入题目标题,不超过20个字" value={value} className="style_input" onChange={this.onChange} />
+              <Input value={value} className="style_input" onChange={this.onChange} />
             </Form.Item>
 
             <Form.Item>
