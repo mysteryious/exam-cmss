@@ -1,5 +1,5 @@
 import { observable, action } from "mobx"
-import {getmangergrade,getexamsubject,getmangerstudentnew,addmangergrade} from "@/api/index"
+import {getmangergrade,getexamsubject,getmangerstudentnew,addmangergrade,mangergradeupdate,deletemangergrade} from "@/api/index"
 
 
 class grade {
@@ -20,10 +20,22 @@ class grade {
     return result
   }
 
-  //添加添加班级接口
+  //添加添加班级接口  
   @action async addmangergrade(params: any): Promise<any>{
     let result: any = await addmangergrade(params);
-    return result
+    return result  
+  }
+
+  //更新班级信息
+  @action async mangergradeupdate(params: any): Promise<any>{
+    let result: any = await mangergradeupdate(params);
+    return result  
+  }
+
+  //删除班级接口
+  @action async deletemangergrade(params: any): Promise<any>{
+    let result: any = await deletemangergrade(params);
+    return result  
   }
 }  
 

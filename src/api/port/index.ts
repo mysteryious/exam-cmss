@@ -33,11 +33,11 @@ export const getmangerstudentnew = '/manger/student/new'
 
 //获取所有的课程
 export const getexamsubject = '/exam/subject'
-
+  
 
 
 //展示用户数据
-export const showUser="/user/user"
+export const showUser="/user/user"  
 //展示身份数据
 export const showIdentity="/user/identity"
 //添加api接口权限
@@ -64,6 +64,12 @@ export const deletemangerroom = '/manger/room/delete'
 //添加班级接口
 export const addmangergrade = '/manger/grade'
 
+
+//更新班级信息
+export const mangergradeupdate = '/manger/grade/update'
+
+//删除班级接口
+export const deletemangergrade = '/manger/grade/delete'
 
 //获取考试类型
 export const getexamType = '/exam/examType'

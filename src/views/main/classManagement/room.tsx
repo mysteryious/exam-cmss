@@ -23,6 +23,7 @@ class ClassMangement extends React.Component<Props> {
   public getList = async () => {
     //获取全部教室
     const subject = await this.props.room.getmangerroom();
+    subject.data.map((item:any,index:number)=>item.key=index)
     this.setState({ data: subject.data });
   };
 
@@ -49,7 +50,7 @@ class ClassMangement extends React.Component<Props> {
   };
   //取消按钮
   handleCancel = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({
       visible: false
     });
@@ -81,7 +82,6 @@ class ClassMangement extends React.Component<Props> {
             onCancel={this.handleCancel}
             cancelText={"取消"}
             okText={"确定"}
-            
           >
           <p>教室号:</p>
           <Form.Item>
@@ -90,7 +90,7 @@ class ClassMangement extends React.Component<Props> {
             }} />
           </Form.Item>
           </Modal>
-          <Table dataSource={data} pagination={false}  rowKey="grade_name" >
+          <Table dataSource={data} pagination={false} >
             <Column title="教室号" dataIndex="room_text" key="room_text" />
             <Column
               title="操作"
