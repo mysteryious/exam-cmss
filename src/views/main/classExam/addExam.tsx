@@ -151,6 +151,11 @@ class AddExam extends React.Component<Props> {
               showTime={{ defaultValue: Moment("00:00:00", "HH:mm:ss") }}
             />
           </div>
+          <div className="iptbox">
+            <Button type="primary">
+              创建试卷
+            </Button>
+          </div>
         </div>
       </div>
     );
