@@ -55,7 +55,7 @@ export let getmangerstudentnew = ()=>{
 //获取所有的课程
 export let getexamsubject = ()=>{
   return request.get(port.getexamsubject);
-}
+}  
 
 
 
@@ -68,7 +68,6 @@ export let addmangerroom = (params:object)=>{
 
 //删除教室号接口
 export let deletemangerroom = (params:object)=>{
-  console.log(params,"这是api删除教室")
   return request.delete(port.deletemangerroom,{data:params});
 }
 
@@ -76,6 +75,16 @@ export let deletemangerroom = (params:object)=>{
 //添加班级接口
 export let addmangergrade = (params:object)=>{
   return request.post(port.addmangergrade,params);
+}
+
+//更新班级信息
+export let mangergradeupdate = (params:object)=>{
+  return request.put(port.mangergradeupdate,params);
+}
+
+//删除班级接口
+export let deletemangergrade = (params:object)=>{
+  return request.delete(port.deletemangergrade,{data:params});
 }
 
 //获取考试类型

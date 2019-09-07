@@ -17,7 +17,6 @@ class room {
     //删除教室号接口
     @action async deletemangerroom(params:any):Promise<any>{
         let result:any = await deletemangerroom(params);
-        console.log(params,'params',result,'result')
         return result
     }
 }

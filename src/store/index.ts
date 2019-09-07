@@ -23,6 +23,7 @@ export default {
   showuser,
   grade,
   room,
-  student,
+  student,  
   exam
 }
+  

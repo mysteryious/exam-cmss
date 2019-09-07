@@ -56,7 +56,7 @@ class ExamList extends React.Component<Props> {
 
         <div
           className="main"
-          style={{ marginBottom: "20px", background: "#fff" }}
+          style={{ marginBottom: "20px", background: "#fff" }} 
         >
           <span className="headerIpt">
             考试类型:&emsp;
@@ -102,7 +102,7 @@ class ExamList extends React.Component<Props> {
             </span>
           </div>
           <div className="dataTable">
-            <Table dataSource={[]} pagination={false}>
+            {/* <Table dataSource={[]} pagination={false}>
               <Column title="试卷信息" dataIndex="room_text" key="room_text" />
               <Column title="班级" dataIndex="room_text" key="room_text" />
               <Column title="创建人" dataIndex="room_text" key="room_text" />
@@ -110,7 +110,7 @@ class ExamList extends React.Component<Props> {
               <Column title="结束时间" dataIndex="room_text" key="room_text" />
               <Column title="操作" dataIndex="room_text" key="room_text" />
               
-            </Table>
+            </Table> */}
           </div>
         </div>
       </div>
