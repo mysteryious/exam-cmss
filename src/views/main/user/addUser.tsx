@@ -1,10 +1,31 @@
 import * as React from "react"
 import { inject, observer } from "mobx-react"
+import { FormComponentProps } from "antd/lib/form/Form"
+import { Radio } from 'antd';
+import "@/styles/user/adduser.css"
+
+let tabs = [
+  {
+    id: 1,
+    tab: "添加用户",
+    user_name: '请输入用户名',
+    user_pwd: '请输入密码',
+    identity_id: []
+  },
+  {
+    id: 2,
+    tab: "更新用户",
+    user_id: [],
+    user_name: '请输入用户名',
+    user_pwd: '请输入密码',
+    identity_id: []
+  }
+]
 
 interface PropInto {
-  question: any,
-  match: any
+  showuser: any
 }
+
 
 // @inject("question")
 // @observer
@@ -16,8 +37,13 @@ class questionsType extends React.Component<PropInto>{
   }
 
   state = {
-    dataSource: []
+    dataSource: [],
+    formLayout: 'horizontal'
   }
+
+  public handleFormLayoutChange = (e: { target: any }) => {
+    this.setState({ formLayout: e.target.value });
+  };
 
   // public getList = async () => {
 
@@ -37,16 +63,57 @@ class questionsType extends React.Component<PropInto>{
   // }
 
 
+
+  public onChange(e: { target: any }) {
+    console.log(`radio checked:${e.target.value}`);
+  }
+
   public render() {
-    const { dataSource } = this.state
+    const { dataSource, formLayout } = this.state
+    const formItemLayout =
+      formLayout === 'horizontal'
+        ? {
+          labelCol: { span: 4 },
+          wrapperCol: { span: 14 },
+        }
+        : null;
+    const buttonItemLayout =
+      formLayout === 'horizontal'
+        ? {
+          wrapperCol: { span: 14, offset: 4 },
+        }
+        : null;
 
     return (
-      <div className="question">
+      <div className="adduser">
         <header>
           <h2 className="logo-title">添加用户</h2>
         </header>
 
-        <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
+        <div className='adduser-main' style={{ marginBottom: '20px', background: '#fff' }}>
+
+          <div className="main-item">
+            <Radio.Group onChange={this.onChange} defaultValue="a">
+              <Radio.Button value="a">添加用户</Radio.Button>
+              <Radio.Button value="b">更新用户</Radio.Button>
+            </Radio.Group>
+          </div>
+
+          <div className="main-item">
+            <Radio.Button>添加身份</Radio.Button>
+          </div>
+          <div className="main-item">
+            <Radio.Button>添加api接口权限</Radio.Button>
+          </div>
+          <div className="main-item">
+            <Radio.Button>添加视图接口权限</Radio.Button>
+          </div>
+          <div className="main-item">
+            <Radio.Button>给身份设置api接口权限</Radio.Button>
+          </div>
+          <div className="main-item">
+            <Radio.Button>给身份设置视图权限</Radio.Button>
+          </div>
 
         </div>
 
