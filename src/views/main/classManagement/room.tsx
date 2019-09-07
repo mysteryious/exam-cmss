@@ -42,7 +42,7 @@ class ClassMangement extends React.Component<Props> {
     //添加教室号接口
     const subject = await this.props.room.addmangerroom({room_text:roomVal});
     this.getList();
-    console.log(subject)
+    // console.log(subject)
     this.setState({
       visible: false
     });
@@ -90,7 +90,7 @@ class ClassMangement extends React.Component<Props> {
             }} />
           </Form.Item>
           </Modal>
-          <Table dataSource={data} pagination={false}>
+          <Table dataSource={data} pagination={false}  rowKey="grade_name" >
             <Column title="教室号" dataIndex="room_text" key="room_text" />
             <Column
               title="操作"
