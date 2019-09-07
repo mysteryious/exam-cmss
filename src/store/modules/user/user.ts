@@ -13,7 +13,7 @@ interface LoginFrom {
 
 class User {
     @observable isLogin: boolean = false;
-    @observable account: any = getocaltion() === null ? "" : getocaltion()
+    @observable account: any = getocaltion("account") === null ? "" : getocaltion("account")
 
     @action async login(from: LoginFrom): Promise<object> {
         const result: any = await userLogin(from);
@@ -21,9 +21,9 @@ class User {
         //是否记住密码
         if (result.code === 1) {
             if (from.remember) {
-                setocaltion(from)
+                setocaltion("account",from)
             } else {
-                removeltion()
+                removeltion("account")
             }
         }
 

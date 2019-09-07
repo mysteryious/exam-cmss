@@ -1,6 +1,7 @@
 import * as React from "react"
 import { List, message, Spin, Select, Button, Layout } from 'antd'
 import { inject, observer } from "mobx-react"
+import {setocaltion} from "@/utils/login"
 import "@/styles/question/watchquestion.css"
 
 
@@ -46,8 +47,14 @@ class watchQuestions extends React.Component<PropInto>{
     })
   }
 
+  public jump = (id: string) => {
+    this.props.history.push(`/main/question/detail/${id}`)
+    setocaltion("id",id)
+  }
+
   public componentDidMount() {
     this.getList()
+
   }
 
   public render() {
@@ -94,7 +101,7 @@ class watchQuestions extends React.Component<PropInto>{
             <div className="item">
               <Button type="primary" icon="search">
                 查询
-                </Button>
+              </Button>
             </div>
           </div>
         </div>
@@ -107,7 +114,7 @@ class watchQuestions extends React.Component<PropInto>{
                 dataSource={getQuestions}
                 renderItem={(item: any, index: number) => (
 
-                  <List.Item onClick={() => this.props.history.push(`/main/question/detail/${item.questions_id}`)}>
+                  <List.Item onClick={()=>this.jump(item.questions_id)}>
                     <List.Item.Meta
                       title={item.title}
                       description={[
@@ -119,7 +126,7 @@ class watchQuestions extends React.Component<PropInto>{
                       ]}
                     />
 
-                    <div><a href="javascript" style={{ color: "#0139FD" }}>编辑</a></div>
+                    <div><a href="http://localhost:3000/main/addQuestions" style={{ color: "#0139FD" }}>编辑</a></div>
                   </List.Item>
                 )}
               >
