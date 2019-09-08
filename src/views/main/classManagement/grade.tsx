@@ -2,6 +2,7 @@ import * as React from "react";
 import { Table, Divider, Tag, Button,Modal,Input,Select } from "antd";
 const {Option} = Select;
 const { Column, ColumnGroup } = Table;
+
 import { observer, inject } from "mobx-react";
 import "@/styles/classMangement/grade.css";
 import { array } from 'prop-types';
@@ -157,6 +158,8 @@ amend = async (text:any)=>{
             destroyOnClose={true}
           >
             <p>班级名:</p>
+
+
             <Input
               placeholder="班级名"
               disabled={disabled}

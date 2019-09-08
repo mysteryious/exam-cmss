@@ -28,19 +28,21 @@ export const getmangergrade = '/manger/grade'
 //获取全部教室
 export const getmangerroom = '/manger/room'
 
-//获取没有分配教室的班级
+//获取所有没有分班的学生接口
 export const getmangerstudentnew = '/manger/student/new'
 
 //获取所有的课程
 export const getexamsubject = '/exam/subject'
-  
+
+//获取所有已经分班的学生的接口
+export const getmangerstudent = '/manger/student'
 
 
 //展示用户数据
 export const showUser="/user/user"  
 //展示身份数据
 export const showIdentity="/user/identity"
-//添加api接口权限
+//添加api接口权限  
 export const authorityApi="/user/api_authority"
 //展示身份和api权限关系
 export const identity_api_authority_relation="/user/identity_api_authority_relation"

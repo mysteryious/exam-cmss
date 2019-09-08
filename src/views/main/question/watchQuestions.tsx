@@ -38,7 +38,9 @@ class watchQuestions extends React.Component<PropInto>{
     const questionsType = await this.props.watchquestions.getQuestionsType();
     //获取所有的试题
     const getQuestions = await this.props.watchquestions.getQuestions();
-
+     
+    getQuestions.data.map((item:any,index:number)=>item.key=index)
+    console.log(getQuestions.data)
     this.setState({
       subject: subject.data,
       examType: examType.data,
@@ -114,9 +116,10 @@ class watchQuestions extends React.Component<PropInto>{
                 dataSource={getQuestions}
                 renderItem={(item: any, index: number) => (
 
-                  <List.Item onClick={()=>this.jump(item.questions_id)}>
+                  <List.Item key={index} onClick={()=>this.jump(item.questions_id)}>
                     <List.Item.Meta
                       title={item.title}
+                      key={index}
                       description={[
                         <span>{item.questions_type_text}</span>,
                         <span>{item.subject_text}</span>,

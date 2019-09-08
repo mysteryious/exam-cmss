@@ -72,7 +72,7 @@ export let deletemangerroom = (params:object)=>{
 }
 
 
-//添加班级接口
+//添加班级接口  
 export let addmangergrade = (params:object)=>{
   return request.post(port.addmangergrade,params);
 }
@@ -90,4 +90,9 @@ export let deletemangergrade = (params:object)=>{
 //获取考试类型
 export let getexamType = ()=>{
   return request.get(port.getexamType);
+}
+
+//获取所有已经分班的学生的接口
+export let getmangerstudent = ()=>{
+  return request.get(port.getmangerstudent);
 }

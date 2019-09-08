@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Table, Divider, Tag, Button, Modal,Input ,Form} from "antd";
 const { Column, ColumnGroup } = Table;
+import { FormComponentProps } from "antd/lib/form/Form";
 import { observer, inject } from "mobx-react";
 import "@/styles/classMangement/room.css";
 
-interface Props {
+interface Props extends FormComponentProps {
   room: any;
   data: any;
+  form:any
 }
 
 @inject("room")
@@ -62,6 +64,7 @@ class ClassMangement extends React.Component<Props> {
   };
   public render() {
     let { data,roomVal} = this.state;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
@@ -83,11 +86,17 @@ class ClassMangement extends React.Component<Props> {
             cancelText={"取消"}
             okText={"确定"}
           >
-          <p>教室号:</p>
-          <Form.Item>
-            <Input placeholder="教室名" onChange={(e)=>{
+          <Form.Item label="教室号" hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+              ],
+            })(<Input placeholder="教室名" onChange={(e)=>{
               this.setState({roomVal:e.target.value})
-            }} />
+            }} />)}
           </Form.Item>
           </Modal>
           <Table dataSource={data} pagination={false} >
@@ -108,4 +117,4 @@ class ClassMangement extends React.Component<Props> {
   }
 }
 
-export default ClassMangement;
+export default Form.create()(ClassMangement);
