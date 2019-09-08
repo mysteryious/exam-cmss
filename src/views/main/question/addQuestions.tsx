@@ -1,8 +1,12 @@
 import * as React from "react"
 import { inject, observer } from "mobx-react"
-import { Layout, Input, Button, Form, Select } from 'antd'
+import { Layout, Input, Button, Form, Select, Modal, message } from 'antd'
 import { FormComponentProps } from "antd/lib/form/Form";
 import { getocaltion, removeltion } from "@/utils/login"
+const { confirm } = Modal;
+const url = require('url')
+const querystring = require("querystring")
+
 import Editor from 'for-editor'
 import "@/styles/question/addQuestions.css"
 
@@ -11,17 +15,20 @@ interface PropInto {
   match: any,
   form: any,
   watchquestions: any,
+  value: any,
+  addQuestions: any,
+  history: any
 }
 
-@inject("watchquestions", "question")
+@inject("watchquestions", "question", "addQuestions")
 @observer
 
-// * stem  题干
-// * theme 主题
-// * examinationType 考试类型
-// * courseType 课程类型
-// * topicType  题目类型
-// * answer  答案
+// * title  题干
+// * questions_stem 主题
+// * exam_name 考试类型
+// * subject_text 课程类型
+// * questions_type_text  题目类型
+// * questions_answer  答案
 
 
 class addQuestions extends React.Component<PropInto>{
@@ -29,36 +36,118 @@ class addQuestions extends React.Component<PropInto>{
     super(props);
   }
 
+
+
   state = {
-    dataSource: [],
-    stem: '请输入题目标题,不操过20个字',
-    theme: '请输入内容...',
-    examinationType: "",
-    courseType: "",
-    topicType: "",
-    answer: "",
+    title: '请输入题目标题,不操过20个字',
+    questions_stem: '请输入内容...',
+    exam_name: "",
+    subject_text: "",
+    questions_type_text: "",
+    questions_answer: "",
+    id: null,
 
     examType: [],
     questionsType: [],
     subject: []
   }
+
+  //保存题干的值
+  public onChangestem = (e: { target: any }) => {
+    this.setState({
+      title: e.target.value
+    });
+  };
+  //题目主题
   handleChange = (value: string) => {
     this.setState({
-      stem: value
+      questions_stem: value
     })
   }
-  handleChangeQuestion = (question: string) => {
+  //考试类型
+  changexaminationType = (value: any) => {
     this.setState({
-      question
+      exam_name: value
+    })
+  }
+  //课程类型
+  changeCourseType = (value: any) => {
+    this.setState({
+      subject_text: value
+    })
+  }
+  //题目类型
+  changeTopicType = (value: any) => {
+    this.setState({
+      questions_type_text: value
+    })
+  }
+  //答案
+  handleChangeQuestion = (value: string) => {
+    this.setState({
+      questions_answer: value
     })
   }
 
-  //保存题干的值
-  public onChange = (e: { target: any }) => {
-    this.setState({
-      stem: e.target.value
+  public showConfirm = () => {
+    //用来判断是修改还是添加
+    let _this = this;
+    const query = url.parse(window.location.search).query
+    const data = querystring.parse(query)
+    let questions_id = data.id;
+    let config = {}
+    const { title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = _this.state;
+    let params = {
+      questions_id,
+      title,
+      questions_stem,
+      questions_answer,
+      subject_id: subject_text,
+      questions_type_id: questions_type_text,
+      exam_id: exam_name
+    }
+
+    if (questions_id) {
+      config = {
+        title: '您要修改吗？',
+        content: '确定要修改这道题吗？',
+        onOk: async () => {
+          const resolve = await _this.props.addQuestions.updateQuestion({ ...params })
+          if (resolve.code != 1) {
+            message.error(resolve.msg, 1)
+          } else {
+            message.success(resolve.msg, 1, () => {
+              _this.props.history.push("/main/watchQuestions")
+            })
+          }
+
+        },
+      }
+    } else {
+      config = {
+        title: '你确定要添加这道试题吗？',
+        content: '真的要添加吗？',
+        onOk: async () => {
+          const resolve = await _this.props.addQuestions.addingQuestions({ ...params, user_id: "w6l6n-cbvl6s" })
+          if (resolve.code === 1) {
+            message.success(resolve.msg, 1, () => {
+              _this.props.history.push("/main/watchQuestions")
+            })
+          } else {
+            message.error(resolve.msg, 1)
+          }
+
+        },
+      }
+    }
+
+
+    confirm({
+      ...config,
+      cancelText: "取消",
+      okText: "确定"
     });
-  };
+  }
 
   public getList = async () => {
     //获取课程类型
@@ -67,6 +156,8 @@ class addQuestions extends React.Component<PropInto>{
     const examType = await this.props.watchquestions.getExamType();
     //获取考试题目类型
     const questionsType = await this.props.watchquestions.getQuestionsType();
+    
+
 
     this.setState({
       subject: subject.data,
@@ -74,44 +165,45 @@ class addQuestions extends React.Component<PropInto>{
       questionsType: questionsType.data
     })
   }
-  // componentWillMount() {
-  //   removeltion("id")
-  // }
+
 
 
   public async componentDidMount() {
+    const query = url.parse(window.location.search).query
+    const data = querystring.parse(query)
+
     //获取数据
     this.getList()
-    let questions_id = JSON.parse(getocaltion("id"))
+
+    let questions_id = data.id;
     //获取详情的数据
     if (questions_id) {
       const result = await this.props.question.questionDetail({
         questions_id
       });
       const { title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = result.data[0]
+
       this.setState({
-        stem: title,
-        theme: questions_stem,
-        examinationType: exam_name,
-        courseType: subject_text,
-        topicType: questions_type_text,
-        answer: questions_answer,
+        id: questions_id,
+        title,
+        questions_stem,
+        exam_name,
+        subject_text,
+        questions_type_text,
+        questions_answer,
       })
     }
+
   }
-
-  public handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    this.props.form.validateFields(async (err: any, values: any) => {
-      if (!err) {
-        //老师登录接口
-      }
-    });
-  };
-
   public render() {
-    const { subject, examType, questionsType, dataSource, stem, theme, examinationType, courseType, topicType, answer } = this.state
+    // * title  题干
+    // * questions_stem 主题
+    // * exam_name 考试类型
+    // * subject_text 课程类型
+    // * questions_type_text  题目类型
+    // * questions_answer  答案
 
+    const { subject, examType, questionsType, id, title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = this.state
     return (
       <div className="question">
         <header>
@@ -119,18 +211,18 @@ class addQuestions extends React.Component<PropInto>{
         </header>
 
         <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
-          <Form onSubmit={this.handleSubmit} className="login-form">
+          <Form className="login-form">
             <Form.Item>
               <h3>题目信息</h3>
               <p>题干</p>
-              <Input value={stem} className="style_input" onChange={this.onChange} />
+              <Input placeholder={title} className="style_input" onChange={this.onChangestem} />
             </Form.Item>
 
             <Form.Item>
               <div >
-                <p> 题目主题</p>
+                <p>题目主题</p>
                 <div className="editorItem">
-                  <Editor value={theme} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
+                  <Editor placeholder={questions_stem} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
                 </div>
               </div>
             </Form.Item>
@@ -138,21 +230,21 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <div >
                 <p>请选择考试类型</p>
-                <Select value={examinationType} style={{ width: 120 }} >
+                <Select value={exam_name} style={{ width: 120 }} onChange={this.changexaminationType}>
                   {examType && examType.map((item: any, index: number) => {
-                    return <Select.Option key={index}>{item.exam_name}</Select.Option>
+                    return <Select.Option key={index} value={item.exam_name}>{item.exam_name}</Select.Option>
                   })}
                 </Select>
                 <p>请选择课程类型</p>
-                <Select value={courseType} style={{ width: 120 }} >
+                <Select value={subject_text} style={{ width: 120 }} onChange={this.changeCourseType}>
                   {subject && subject.map((item: any, index: number) => {
-                    return <Select.Option key={index}>{item.subject_text}</Select.Option>
+                    return <Select.Option key={index} value={item.subject_text}>{item.subject_text}</Select.Option>
                   })}
                 </Select>
                 <p>请选择题目类型</p>
-                <Select value={topicType} style={{ width: 120 }} >
+                <Select value={questions_type_text} style={{ width: 120 }} onChange={this.changeTopicType}>
                   {questionsType && questionsType.map((item: any, index: number) => {
-                    return <Select.Option key={index}>{item.questions_type_text}</Select.Option>
+                    return <Select.Option key={index} value={item.questions_type_text}>{item.questions_type_text}</Select.Option>
                   })}
                 </Select>
               </div>
@@ -162,20 +254,22 @@ class addQuestions extends React.Component<PropInto>{
               <div >
                 <h2>答案信息</h2>
                 <div className="editorItem">
-                  <Editor value={answer} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
+                  <Editor placeholder={questions_answer} style={{ height: "600px" }} onChange={this.handleChangeQuestion.bind(this)} />
                 </div>
               </div>
             </Form.Item>
 
-            <Button type='primary' htmlType="submit">
-              提交
-					  </Button>
+
+            <Button type='primary' onClick={this.showConfirm.bind(this)}>提交</Button>
+
           </Form>
 
         </div>
       </div>
     )
   }
+
+
 }
 
 export default addQuestions

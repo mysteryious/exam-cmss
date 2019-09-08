@@ -25,7 +25,6 @@
   background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
 }
 
-
 .style_input {
   width: 100%;
   height: 40px;
@@ -34,12 +33,12 @@
   border-bottom: 1px solid #eee;
   margin: 20px 0;
 }
-.ant-modal-content{
+.dialog .ant-modal-content {
   width: 600px;
   height: 275px;
   text-align: center;
 }
-.ant-modal-body{
+.dialog .ant-modal-body {
   border: 0 !important;
-  padding: 24px 80px!important;
+  padding: 24px 80px !important;
 }

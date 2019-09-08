@@ -1,17 +1,17 @@
 import * as React from "react"
 import { List, message, Spin, Select, Button, Layout } from 'antd'
 import { inject, observer } from "mobx-react"
-import {setocaltion} from "@/utils/login"
 import "@/styles/question/watchquestion.css"
 
 
 interface PropInto {
   watchquestions: any,
-  history: any
+  history: any,
+  question:any
 }
 
 
-@inject("watchquestions")
+@inject("watchquestions","question")
 @observer
 
 
@@ -20,6 +20,7 @@ class watchQuestions extends React.Component<PropInto>{
 
   constructor(props: any) {
     super(props);
+    this.getList()
   }
 
   state = {
@@ -38,6 +39,10 @@ class watchQuestions extends React.Component<PropInto>{
     const questionsType = await this.props.watchquestions.getQuestionsType();
     //获取所有的试题
     const getQuestions = await this.props.watchquestions.getQuestions();
+    getQuestions.data.map((item: any, index: number) => item.key = index)
+
+    const data = await this.props.question.questionDetail()
+    console.log(data, "date")
 
     this.setState({
       subject: subject.data,
@@ -49,13 +54,16 @@ class watchQuestions extends React.Component<PropInto>{
 
   public jump = (id: string) => {
     this.props.history.push(`/main/question/detail/${id}`)
-    setocaltion("id",id)
+  }
+
+  public modify = (id: string) => {
+    this.props.history.replace(`/main/addQuestions?id=${id}`)
   }
 
   public componentDidMount() {
     this.getList()
-
   }
+ 
 
   public render() {
     const { subject, examType, questionsType, getQuestions } = this.state
@@ -113,8 +121,7 @@ class watchQuestions extends React.Component<PropInto>{
               <List
                 dataSource={getQuestions}
                 renderItem={(item: any, index: number) => (
-
-                  <List.Item onClick={()=>this.jump(item.questions_id)}>
+                  <List.Item>
                     <List.Item.Meta
                       title={item.title}
                       description={[
@@ -122,11 +129,12 @@ class watchQuestions extends React.Component<PropInto>{
                         <span>{item.subject_text}</span>,
                         <span>{item.exam_name}</span>,
                         <br />,
-                        <a href="javascript" style={{ color: "#0139FD", paddingTop: "10px", display: "block" }}>{item.user_name}发布</a>
+                        <a href="/main/question/detail" style={{ color: "#0139FD", paddingTop: "10px", display: "block" }}>{item.user_name}发布</a>
                       ]}
+                    // onClick={()=>this.jump(item.questions_id)}
                     />
 
-                    <div><a href="http://localhost:3000/main/addQuestions" style={{ color: "#0139FD" }}>编辑</a></div>
+                    <div><a onClick={() => this.modify(item.questions_id)} style={{ color: "#0139FD" }}>编辑</a></div>
                   </List.Item>
                 )}
               >

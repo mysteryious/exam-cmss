@@ -28,6 +28,7 @@ class watchquestions {
   }
   @action async getQuestions(): Promise<any> {
     let result: any = await getQuestions();
+    console.log(result)
     return result
   }
 }
