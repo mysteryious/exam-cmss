@@ -7,7 +7,7 @@ const { SubMenu } = Menu;
 
 const menuList = [
   {
-    id:1,
+    id: 1,
     key: "sub1",
     title: "试题管理",
     icon: "sliders",
@@ -30,7 +30,7 @@ const menuList = [
     ]
   },
   {
-    id:2,
+    id: 2,
     key: "sub2",
     title: "用户管理",
     icon: "user",
@@ -61,7 +61,7 @@ const menuList = [
       {
         id: 2,
         title: "试卷列表",
-        to:'/main/examList',
+        to: '/main/examList',
       }
     ]
   },
@@ -97,7 +97,7 @@ const menuList = [
       {
         id: 1,
         title: "待批班级",
-        to:'/main/vip'
+        to: '/main/vip'
       }
     ]
   }
