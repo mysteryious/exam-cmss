@@ -61,31 +61,68 @@ class ClassMangement extends React.Component<Props> {
   state = {
     mangerstudentAll: [],
     subjectAll: [],
-    mangergradeAll: []
+    mangergradeAll: [],
+    student_name:'',
+    room_text:'',
+    grade_name:''
   };
   //获取ipt的值
   handleNumberChange = (e: any) => {
     console.log(e.target.value);
+    this.setState({student_name:e.target.value})
   };
   //教室号的下拉菜单
   roomChange = (e: any) => {
-    console.log(e);
+    this.setState({room_text:e})
   };
   //班级号的下拉菜单
   gradeChange = (e: any) => {
-    console.log(e);
+    this.setState({grade_name:e})
   };
   //点击搜索按钮
-  handleSubmit = (e: any) => {
-    console.log(e);
+  handleSubmit = () => {
+    let {mangerstudentAll, student_name,room_text,grade_name} = this.state;
+    // console.log(student_name,room_text,grade_name)
+    let filterArr = mangerstudentAll.filter((item:any,index:any)=>{
+      
+      if(student_name){
+        return item.student_name == student_name
+      }else if(room_text){
+        return item.room_text == room_text
+      }else if(grade_name){
+        return item.grade_name == grade_name
+      }else if(student_name&&room_text){
+        return item.student_name == student_name &&item.room_text == room_text 
+      }else if(student_name&&grade_name){
+        return item.student_name == student_name &&item.grade_name == grade_name 
+      }else if(room_text&&grade_name){
+        return item.room_text == room_text &&item.grade_name == grade_name 
+      }else if(student_name&&room_text&&grade_name){
+        return item.grade_name == grade_name&&item.room_text == room_text && item.student_name == student_name
+      }else{
+        return mangerstudentAll
+      }
+    })
+    console.log(filterArr)
+    this.setState({mangerstudentAll:filterArr})
+
   };
   //点击重置按钮
-  reset = ()=>{
-
+  reset = () => {
+    this.props.form.resetFields();
+    this.setState({student_name:'',room_text:'',grade_name:''})
+    this.getList()
+  };
+  //点击删除按钮
+  deleteTabble = async(text:any)=>{
+    const subject = await this.props.student.deletemangerstudent({id:text.student_id});
+    console.log(subject)
+    this.getList();
   }
 
   public render() {
     let { mangerstudentAll, subjectAll, mangergradeAll } = this.state;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
@@ -95,61 +132,78 @@ class ClassMangement extends React.Component<Props> {
           <Form layout="inline">
             <Form.Item>
               <span>
-                <Input
-                  type="text"
-                  placeholder="输入学生姓名"
-                  onChange={this.handleNumberChange}
-                  style={{ width: 200, marginRight: "3%" }}
-                />
+                {getFieldDecorator("输入学生姓名", {
+                  initialValue: ""
+                })(
+                  <Input
+                    type="text"
+                    placeholder="输入学生姓名"
+                    onChange={this.handleNumberChange}
+                    style={{ width: 200, marginRight: "3%" }}
+                  />
+                )}
               </span>
             </Form.Item>
             <Form.Item>
               <span>
-                <Select
-                  placeholder="请选择教室号"
-                  style={{ width: 200, marginRight: "3%" }}
-                  onChange={this.roomChange}
-                >
-                  {subjectAll &&
-                    subjectAll.map((item: any, index: any) => {
-                      return (
-                        <Option value={item.room_id} key={item.room_text}>
-                          {item.room_text}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                {getFieldDecorator("请选择教室号", {
+                  // initialValue: "请选择教室号"
+                })(
+                  <Select
+                    placeholder="请选择教室号"
+                    style={{ width: 200, marginRight: "3%" }}
+                    onChange={this.roomChange}
+                  >
+                    {subjectAll &&
+                      subjectAll.map((item: any, index: any) => {
+                        return (
+                          <Option value={item.room_text} key={item.room_text}>
+                            {item.room_text}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
               </span>
             </Form.Item>
             <Form.Item>
               <span>
-                <Select
-                  placeholder="班级名"
-                  style={{ width: 200, marginRight: "3%" }}
-                  onChange={this.gradeChange}
-                >
-                  {mangergradeAll &&
-                    mangergradeAll.map((item: any, index: any) => {
-                      return (
-                        <Option value={item.grade_id} key={item.grade_id}>
-                          {item.grade_name}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                {getFieldDecorator("班级名", {
+                  // initialValue: "班级名"
+                })(
+                  <Select
+                    placeholder="班级名"
+                    style={{ width: 200, marginRight: "3%" }}
+                    onChange={this.gradeChange}
+                  >
+                    {mangergradeAll &&
+                      mangergradeAll.map((item: any, index: any) => {
+                        return (
+                          <Option value={item.grade_name} key={item.grade_id}>
+                            {item.grade_name}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
               </span>
             </Form.Item>
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
-                onChange={this.handleSubmit}
+                onClick={this.handleSubmit}
               >
                 搜索
               </Button>
             </Form.Item>
             <Form.Item>
-              <Button onChange={this.reset}>重置</Button>
+              {getFieldDecorator("重置", {
+                initialValue: "",
+                resetFields: (e: any) => {
+                  console.log(e);
+                }
+              })(<Button onClick={this.reset}>重置</Button>)}
             </Form.Item>
           </Form>
         </div>
@@ -168,7 +222,7 @@ class ClassMangement extends React.Component<Props> {
               key="操作"
               render={(text, record: any) => (
                 <span>
-                  <a>删除</a>
+                  <a onClick={this.deleteTabble.bind(this,text)}>删除</a>
                 </span>
               )}
             />
