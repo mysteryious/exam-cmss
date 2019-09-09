@@ -63,8 +63,10 @@ export let getexamsubject = ()=>{
   return request.get(port.getexamsubject);
 }  
 
-
-
+//删除学生接口
+export let deletemangerstudent = (params:object)=>{
+  return request.delete(port.deletemangerstudent+params);
+}
 
 
 

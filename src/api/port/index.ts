@@ -34,6 +34,8 @@ export const getexamsubject = '/exam/subject'
 //获取所有已经分班的学生的接口
 export const getmangerstudent = '/manger/student'
 
+//删除学生接口
+export const deletemangerstudent = '/manger/student/'
 
 //展示用户数据
 export const showUser="/user/user"  
