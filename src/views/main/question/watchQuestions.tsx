@@ -121,9 +121,11 @@ class watchQuestions extends React.Component<PropInto>{
               <List
                 dataSource={getQuestions}
                 renderItem={(item: any, index: number) => (
-                  <List.Item>
+
+                  <List.Item key={index} onClick={()=>this.jump(item.questions_id)}>
                     <List.Item.Meta
                       title={item.title}
+                      key={index}
                       description={[
                         <span>{item.questions_type_text}</span>,
                         <span>{item.subject_text}</span>,

@@ -39,7 +39,7 @@ class Login extends React.Component<UserFormProps, any> {
                   }
                   placeholder="username"
                 />
-              )}
+              )}  
             </Form.Item>
             <Form.Item>
               {getFieldDecorator("user_pwd", {

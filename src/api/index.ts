@@ -94,3 +94,8 @@ export let deletemangergrade = (params:object)=>{
 export let getexamType = ()=>{
   return request.get(port.getexamType);
 }
+
+//获取所有已经分班的学生的接口
+export let getmangerstudent = ()=>{
+  return request.get(port.getmangerstudent);
+}
