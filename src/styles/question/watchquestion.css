@@ -57,7 +57,12 @@
 .active {
   color: red;
 }
-.ant-list-item-meta-description span{
+.ant-list-item-content {
+  flex: 1;
+  justify-content: flex-start
+}
+
+.ant-list-item-content  span{
   list-style: none;
   display: inline-block;
   line-height: 20px;
@@ -69,18 +74,18 @@
   margin-top: 10px;
 }
 
-.ant-list-item-meta-description span:nth-child(1) {
+.ant-list-item-content  span:nth-child(2) {
   color: #1890ff;
   background: #e6f7ff;
   border-color: #91d5ff;
 }
 
-.ant-list-item-meta-description span:nth-child(2) {
+.ant-list-item-content  span:nth-child(3) {
   color: #2f54eb;
   background: #f0f5ff;
   border-color: #adc6ff;
 }
-.ant-list-item-meta-description span:nth-child(3) {
+.ant-list-item-content  span:nth-child(4) {
   color: #fa8c16;
   background: #fff7e6;
   border-color: #ffd591;

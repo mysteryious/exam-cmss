@@ -3,32 +3,27 @@ import { List, message, Spin, Select, Button, Layout } from 'antd'
 import { inject, observer } from "mobx-react"
 import "@/styles/question/watchquestion.css"
 
-
 interface PropInto {
   watchquestions: any,
   history: any,
-  question:any
+  question: any
 }
 
-
-@inject("watchquestions","question")
+@inject("watchquestions", "question")
 @observer
 
-
-
 class watchQuestions extends React.Component<PropInto>{
-
-  constructor(props: any) {
-    super(props);
-    this.getList()
-  }
-
   state = {
     subject: [],
     examType: [],
     questionsType: [],
     getQuestions: []
   }
+  constructor(props: any) {
+    super(props);
+    this.getList()
+  }
+ 
 
   public getList = async () => {
     //获取课程类型
@@ -38,11 +33,8 @@ class watchQuestions extends React.Component<PropInto>{
     //获取考试题目类型
     const questionsType = await this.props.watchquestions.getQuestionsType();
     //获取所有的试题
-    const getQuestions = await this.props.watchquestions.getQuestions();
+    const getQuestions = await this.props.question.questionDetail();
     getQuestions.data.map((item: any, index: number) => item.key = index)
-
-    const data = await this.props.question.questionDetail()
-    console.log(data, "date")
 
     this.setState({
       subject: subject.data,
@@ -52,18 +44,9 @@ class watchQuestions extends React.Component<PropInto>{
     })
   }
 
-  public jump = (id: string) => {
-    this.props.history.push(`/main/question/detail/${id}`)
-  }
-
-  public modify = (id: string) => {
-    this.props.history.replace(`/main/addQuestions?id=${id}`)
-  }
-
-  public componentDidMount() {
-    this.getList()
-  }
- 
+  // public componentDidMount() {
+  //   this.getList()
+  // }
 
   public render() {
     const { subject, examType, questionsType, getQuestions } = this.state
@@ -120,27 +103,20 @@ class watchQuestions extends React.Component<PropInto>{
             <Layout style={{ padding: '0 24px 24px', background: "#fff", borderRadius: "10px" }}>
               <List
                 dataSource={getQuestions}
-                renderItem={(item: any, index: number) => (
-
-                  <List.Item key={index} onClick={()=>this.jump(item.questions_id)}>
-                    <List.Item.Meta
-                      title={item.title}
-                      key={index}
-                      description={[
-                        <span>{item.questions_type_text}</span>,
-                        <span>{item.subject_text}</span>,
-                        <span>{item.exam_name}</span>,
-                        <br />,
-                        <a href="/main/question/detail" style={{ color: "#0139FD", paddingTop: "10px", display: "block" }}>{item.user_name}发布</a>
-                      ]}
-                    // onClick={()=>this.jump(item.questions_id)}
-                    />
-
-                    <div><a onClick={() => this.modify(item.questions_id)} style={{ color: "#0139FD" }}>编辑</a></div>
+                renderItem={(item: any) => (
+                  <List.Item>
+                    <div className="ant-list-item-content" onClick={()=>this.props.history.push(`/main/question/detail/${item.questions_id}`)}>
+                      <List.Item.Meta title={item.title} />
+                      <span>{item.questions_type_text}</span>
+                      <span>{item.subject_text}</span>
+                      <span>{item.exam_name}</span>
+                      <br />
+                      <a href="/main/question/detail" style={{ color: "#0139FD", paddingTop: "10px", display: "block" }}>{item.user_name}发布</a>
+                    </div>
+                    <div><a onClick={()=>this.props.history.replace(`/main/addQuestions?id=${item.questions_id}`)} style={{ color: "#0139FD" }}>编辑</a></div>
                   </List.Item>
                 )}
-              >
-              </List>
+              />
             </Layout>
           </div>
         </div>

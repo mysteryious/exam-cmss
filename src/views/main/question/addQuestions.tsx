@@ -23,33 +23,24 @@ interface PropInto {
 @inject("watchquestions", "question", "addQuestions")
 @observer
 
-// * title  题干
-// * questions_stem 主题
-// * exam_name 考试类型
-// * subject_text 课程类型
-// * questions_type_text  题目类型
-// * questions_answer  答案
-
-
 class addQuestions extends React.Component<PropInto>{
   constructor(props: any) {
     super(props);
   }
-
-
-
   state = {
-    title: '请输入题目标题,不操过20个字',
-    questions_stem: '请输入内容...',
-    exam_name: "",
-    subject_text: "",
-    questions_type_text: "",
-    questions_answer: "",
-    id: null,
-
     examType: [],
     questionsType: [],
-    subject: []
+    subject: [],
+    title: '请输入题目标题,不操过20个字',
+    questions_stem: '请输入内容...',
+    exam_name: "",//周考二
+    subject_text: "",//组件化开发
+    questions_type_text: "",//代码阅读题
+    questions_answer: "",
+    id: null,
+    exam_id: '',
+    subject_id: '',
+    questions_type_id: ''
   }
 
   //保存题干的值
@@ -96,15 +87,15 @@ class addQuestions extends React.Component<PropInto>{
     const data = querystring.parse(query)
     let questions_id = data.id;
     let config = {}
-    const { title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = _this.state;
+    const { title, questions_stem, exam_id, subject_id, questions_type_id, questions_answer } = _this.state;
+
     let params = {
-      questions_id,
       title,
       questions_stem,
       questions_answer,
-      subject_id: subject_text,
-      questions_type_id: questions_type_text,
-      exam_id: exam_name
+      subject_id,
+      questions_type_id,
+      exam_id
     }
 
     if (questions_id) {
@@ -112,7 +103,7 @@ class addQuestions extends React.Component<PropInto>{
         title: '您要修改吗？',
         content: '确定要修改这道题吗？',
         onOk: async () => {
-          const resolve = await _this.props.addQuestions.updateQuestion({ ...params })
+          const resolve = await _this.props.addQuestions.updateQuestion({ questions_id,...params })
           if (resolve.code != 1) {
             message.error(resolve.msg, 1)
           } else {
@@ -156,17 +147,12 @@ class addQuestions extends React.Component<PropInto>{
     const examType = await this.props.watchquestions.getExamType();
     //获取考试题目类型
     const questionsType = await this.props.watchquestions.getQuestionsType();
-    
-
-
     this.setState({
       subject: subject.data,
       examType: examType.data,
       questionsType: questionsType.data
     })
   }
-
-
 
   public async componentDidMount() {
     const query = url.parse(window.location.search).query
@@ -181,16 +167,20 @@ class addQuestions extends React.Component<PropInto>{
       const result = await this.props.question.questionDetail({
         questions_id
       });
-      const { title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = result.data[0]
+      const { title, questions_stem, exam_name, exam_id, subject_text, subject_id, questions_type_text, questions_type_id, questions_answer } = result.data[0];
+
 
       this.setState({
         id: questions_id,
         title,
         questions_stem,
         exam_name,
+        exam_id,
         subject_text,
+        subject_id,
         questions_type_text,
-        questions_answer,
+        questions_type_id,
+        questions_answer
       })
     }
 
@@ -202,8 +192,7 @@ class addQuestions extends React.Component<PropInto>{
     // * subject_text 课程类型
     // * questions_type_text  题目类型
     // * questions_answer  答案
-
-    const { subject, examType, questionsType, id, title, questions_stem, exam_name, subject_text, questions_type_text, questions_answer } = this.state
+    const { subject, examType, questionsType, id, title, questions_stem, exam_name, exam_id, subject_text, subject_id, questions_type_text, questions_type_id, questions_answer } = this.state;
     return (
       <div className="question">
         <header>
@@ -215,14 +204,14 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <h3>题目信息</h3>
               <p>题干</p>
-              <Input placeholder={title} className="style_input" onChange={this.onChangestem} />
+              <Input value={title} className="style_input" onChange={this.onChangestem} />
             </Form.Item>
 
             <Form.Item>
               <div >
                 <p>题目主题</p>
                 <div className="editorItem">
-                  <Editor placeholder={questions_stem} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
+                  <Editor value={questions_stem} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
                 </div>
               </div>
             </Form.Item>
@@ -254,7 +243,7 @@ class addQuestions extends React.Component<PropInto>{
               <div >
                 <h2>答案信息</h2>
                 <div className="editorItem">
-                  <Editor placeholder={questions_answer} style={{ height: "600px" }} onChange={this.handleChangeQuestion.bind(this)} />
+                  <Editor value={questions_answer} style={{ height: "600px" }} onChange={this.handleChangeQuestion.bind(this)} />
                 </div>
               </div>
             </Form.Item>
