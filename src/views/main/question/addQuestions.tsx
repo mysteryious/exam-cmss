@@ -103,7 +103,7 @@ class addQuestions extends React.Component<PropInto>{
         title: '您要修改吗？',
         content: '确定要修改这道题吗？',
         onOk: async () => {
-          const resolve = await _this.props.addQuestions.updateQuestion({ questions_id,...params })
+          const resolve = await _this.props.addQuestions.updateQuestion({ questions_id, ...params })
           if (resolve.code != 1) {
             message.error(resolve.msg, 1)
           } else {
@@ -111,7 +111,6 @@ class addQuestions extends React.Component<PropInto>{
               _this.props.history.push("/main/watchQuestions")
             })
           }
-
         },
       }
     } else {
@@ -119,15 +118,18 @@ class addQuestions extends React.Component<PropInto>{
         title: '你确定要添加这道试题吗？',
         content: '真的要添加吗？',
         onOk: async () => {
-          const resolve = await _this.props.addQuestions.addingQuestions({ ...params, user_id: "w6l6n-cbvl6s" })
-          if (resolve.code === 1) {
-            message.success(resolve.msg, 1, () => {
-              _this.props.history.push("/main/watchQuestions")
-            })
+          if (title && questions_stem && questions_answer && subject_id && questions_type_id && exam_id) {
+            const resolve = await _this.props.addQuestions.addingQuestions({ ...params, user_id: "w6l6n-cbvl6s" })
+            if (resolve.code === 1) {
+              message.success(resolve.msg, 1, () => {
+                _this.props.history.push("/main/watchQuestions")
+              })
+            } else {
+              message.error(resolve.msg, 1)
+            }
           } else {
-            message.error(resolve.msg, 1)
+            message.error("请将页面填写完整", 1)
           }
-
         },
       }
     }
