@@ -71,3 +71,6 @@ export const deletemangergrade = '/manger/grade/delete'
 
 //获取考试类型
 export const getexamType = '/exam/examType'
+
+//获取试卷列表
+export const getexamList = '/exam/exam'

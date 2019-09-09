@@ -68,7 +68,7 @@ class ClassMangement extends React.Component<Props> {
   };
   //获取ipt的值
   handleNumberChange = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({student_name:e.target.value})
   };
   //教室号的下拉菜单
@@ -103,7 +103,7 @@ class ClassMangement extends React.Component<Props> {
         return mangerstudentAll
       }
     })
-    console.log(filterArr)
+    // console.log(filterArr)
     this.setState({mangerstudentAll:filterArr})
 
   };
@@ -116,7 +116,7 @@ class ClassMangement extends React.Component<Props> {
   //点击删除按钮
   deleteTabble = async(text:any)=>{
     const subject = await this.props.student.deletemangerstudent({id:text.student_id});
-    console.log(subject)
+    // console.log(subject)
     this.getList();
   }
 

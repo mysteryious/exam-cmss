@@ -10,4 +10,4 @@ class exam {
     
 }
 
-export default exam  
+export default exam    

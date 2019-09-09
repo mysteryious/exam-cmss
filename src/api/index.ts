@@ -101,3 +101,8 @@ export let getexamType = ()=>{
 export let getmangerstudent = ()=>{
   return request.get(port.getmangerstudent);
 }
+
+////获取试卷列表
+export let getexamList = ()=>{
+  return request.get(port.getexamList);
+}
