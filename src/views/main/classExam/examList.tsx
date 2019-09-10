@@ -117,7 +117,7 @@ class ExamList extends React.Component<Props> {
               <Column title="班级" dataIndex="grade_name" key="grade_name" />
               <Column title="创建人" dataIndex="user_name" key="user_name" />
               <Column title="开始时间" dataIndex="start_time" key="start_time" />
-              <Column title="结束时间" 
+              <Column title="结束时间" key="end_time"
                 render={(text:any, record: any) => (
                   <span>
                     {text["end_time"]}

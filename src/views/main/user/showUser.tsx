@@ -148,30 +148,21 @@ class questionsType extends React.Component<PropInto>{
 
   state = {
     ind: 0,
+    url:['/user','/identity','/api_authority','/identity_api_authority_relation','/view_authority','/identity_view_authority_relation'],
     tabs
   }
 
-  public getList = async () => {
-
-    //用户数据
-   let showuser= await this.props.showuser.showUser();
-    tabs[0].dataSource=showuser.data
-    //展示身份数据
-    tabs[1].dataSource= await this.props.showuser.showIdentity();
-    //添加api接口权限
-    tabs[2].dataSource= await this.props.showuser.authorityApi();
-    //展示身份和api权限关系
-    tabs[3].dataSource= await this.props.showuser.identity_api_authority_relation();
-    //获取视图权限数据
-    tabs[4].dataSource=await this.props.showuser.view_authority();
-    //展示身份和视图权限关系
-    tabs[5].dataSource= await this.props.showuser.identity_view_authority_relation();
-    this.setState({tabs})
+  tabClick = async(index:any) =>{
+    let {url} = this.state;
+    //获取用户展示页面数据
+      let data = await this.props.showuser.getShowUserdata(url[index-1]);
+      tabs[index-1].dataSource = data
+      this.setState({tabs})
   }
 
   public componentDidMount() {
     //获取数据
-    this.getList()
+    this.tabClick(1)
   }
 
 
@@ -184,19 +175,17 @@ class questionsType extends React.Component<PropInto>{
         </header>
 
         <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
-          <Tabs type="card">
+          <Tabs type="card" onTabClick={this.tabClick.bind(this)}>
             {
               tabs && tabs.map((item:any) => {
                 return <TabPane tab={item.tab} key={JSON.stringify(item.id)}>
                   <h2>{item.tab}</h2>
-                  <Table columns={item.columns} dataSource={item.dataSource} pagination={false} rowKey="user_id" />
+                  <Table columns={item.columns} dataSource={item.dataSource}  rowKey="user_id" />
                 </TabPane>
               })
             }
           </Tabs>
         </div>
-
-
       </div>
     )
   }

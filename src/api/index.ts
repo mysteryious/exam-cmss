@@ -106,3 +106,5 @@ export let getmangerstudent = ()=>{
 export let getexamList = ()=>{
   return request.get(port.getexamList);
 }
+
+

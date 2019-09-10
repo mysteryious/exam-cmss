@@ -61,7 +61,7 @@ class addQuestions extends React.Component<PropInto>{
       exam_name: value
     })
   }
-  //课程类型
+  //课程类型  
   changeCourseType = (value: any) => {
     this.setState({
       subject_text: value

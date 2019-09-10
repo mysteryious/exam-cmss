@@ -1,5 +1,5 @@
 import { observable, action } from "mobx"
-import { showUser, showIdentity, authorityApi, identity_api_authority_relation, view_authority, identity_view_authority_relation } from "../../../api/user"
+import { showUser, showIdentity, authorityApi, identity_api_authority_relation, view_authority, identity_view_authority_relation,getShowUserdata } from "../../../api/user"
 
 
 class showuser {
@@ -26,12 +26,21 @@ class showuser {
   //获取视图权限数据
   @action async view_authority(): Promise<object> {
     const result: any = await view_authority();
-    return result.data
+    return result.data   
   }
   //展示身份和视图权限关系
   @action async identity_view_authority_relation(): Promise<object> {
     const result: any = await identity_view_authority_relation();
     return result.data
   }
+
+
+  //获取用户展示页面数据
+  @action async getShowUserdata(params:any): Promise<object> {
+    const result: any = await getShowUserdata(params);
+    return result.data
+  }
+
+
 }
 export default showuser
