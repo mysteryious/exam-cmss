@@ -42,3 +42,7 @@ export let identity_view_authority_relation = () => {
 }
 
 
+//获取用户展示页面数据
+export let getShowUserdata = (params:object)=>{
+    return request.get(port.getShowUserdata+""+params);
+  }

@@ -158,8 +158,6 @@ amend = async (text:any)=>{
             destroyOnClose={true}
           >
             <p>班级名:</p>
-
-
             <Input
               placeholder="班级名"
               disabled={disabled}

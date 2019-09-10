@@ -1,111 +1,184 @@
-import * as React from "react"
+
 import { inject, observer } from "mobx-react"
-import { FormComponentProps } from "antd/lib/form/Form"
 import { Radio } from 'antd';
 import {injectIntl} from "react-intl"
-import "@/styles/user/adduser.css"
-
-let tabs = [
-  {
-    id: 1,
-    tab: "添加用户",
-    user_name: '请输入用户名',
-    user_pwd: '请输入密码',
-    identity_id: []
-  },
-  {
-    id: 2,
-    tab: "更新用户",
-    user_id: [],
-    user_name: '请输入用户名',
-    user_pwd: '请输入密码',
-    identity_id: []
-  }
-]
-
-interface PropInto {
-  showuser: any,
-  intl:any
-}
-
-
-@inject("question")
-@observer
-
-
-class questionsType extends React.Component<PropInto>{
-  constructor(props: any) {
-    super(props);
-  }
-
+import * as React from "react";
+import { Form, Button, Input, Select, Radio } from "antd";
+import "@/styles/user/adduser.css";
+const { Option } = Select;
+class Add extends React.Component {
   state = {
-    dataSource: [],
-    formLayout: 'horizontal'
-  }
-
-  public handleFormLayoutChange = (e: { target: any }) => {
-    this.setState({ formLayout: e.target.value });
+    size: "large"
   };
-
-
-  public onChange(e: { target: any }) {
-    console.log(`radio checked:${e.target.value}`);
-  }
-
+  handleSizeChange = (e: any) => {
+    this.setState({ size: e.target.value });
+  };
   public render() {
-    const { dataSource, formLayout } = this.state
-    const {formatMessage}=this.props.intl
-    const formItemLayout =
-      formLayout === 'horizontal'
-        ? {
-          labelCol: { span: 4 },
-          wrapperCol: { span: 14 },
-        }
-        : null;
-    const buttonItemLayout =
-      formLayout === 'horizontal'
-        ? {
-          wrapperCol: { span: 14, offset: 4 },
-        }
-        : null;
-
+    const { size } = this.state;
     return (
-      <div className="adduser">
-        <header>
-          <h2 className="logo-title">{formatMessage({id:"menu.user.addUser"})}</h2>
-        </header>
+      <div className="add">
+        <h3>添加用户</h3>
+        <div className="content">
+          <Form className="wrap">
+            <Form.Item className="wrap_item zxy">
+              <div className="tits">
+                <Radio.Group value={size} onChange={this.handleSizeChange}>
+                  <Radio.Button value="large">添加用户</Radio.Button>
+                  <Radio.Button value="default">更新用户</Radio.Button>
+                </Radio.Group>
+              </div>
+              <div className={size==="large" ? 'show':'hide'}>
+                <div>
+                  <Input placeholder="请输入用户名" />
+                  <Input placeholder="请输入密码" />
+                  <Select placeholder="请选择身份id" style={{ width: 180 }}>
+                    <Option value="管理员">管理员</Option>
+                    <Option value="出题者">出题者</Option>
+                    <Option value="浏览者">管理员</Option>
+                  </Select>
+                </div>
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset" htmlType="reset">
+                    重置
+                  </Button>
+                </div>
+              </div>
 
-        <div className='adduser-main' style={{ marginBottom: '20px', background: '#fff' }}>
+              <div className={size==="default" ? 'show':'hide'}>
+                <div>
+                  
+                  <Select placeholder="请选择身份id" style={{ width: 180 }}>
+                    <Option value="zhaoxiaoru">zhaoxiaoru</Option>
+                    <Option value="liuyu">liuyu</Option>
+                    <Option value="yihang">yihang</Option>
+                  </Select>
+                  <Input placeholder="请输入用户名" />
+                  <Input placeholder="请输入密码" />
+                  <Select placeholder="请选择身份id" style={{ width: 180 }}>
+                    <Option value="管理员">管理员</Option>
+                    <Option value="出题者">出题者</Option>
+                    <Option value="浏览者">管理员</Option>
+                  </Select>
+                </div>
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset" htmlType="reset">
+                    重置
+                  </Button>
+                </div>
+              </div>
+            </Form.Item>
 
-          <div className="main-item">
-            <Radio.Group onChange={this.onChange} defaultValue="a">
-              <Radio.Button value="a">添加用户</Radio.Button>
-              <Radio.Button value="b">更新用户</Radio.Button>
-            </Radio.Group>
-          </div>
+            <Form.Item className="wrap_item">
+              <div className="tits">
+                <p className="active">添加身份</p>
+              </div>
+              <div>
+                <Input placeholder="请输入身份名称" />
+              </div>
+              <div className="item_box">
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset">重置</Button>
+                </div>
+              </div>
+            </Form.Item>
 
-          <div className="main-item">
-            <Radio.Button>添加身份</Radio.Button>
-          </div>
-          <div className="main-item">
-            <Radio.Button>添加api接口权限</Radio.Button>
-          </div>
-          <div className="main-item">
-            <Radio.Button>添加视图接口权限</Radio.Button>
-          </div>
-          <div className="main-item">
-            <Radio.Button>给身份设置api接口权限</Radio.Button>
-          </div>
-          <div className="main-item">
-            <Radio.Button>给身份设置视图权限</Radio.Button>
-          </div>
+            <Form.Item className="wrap_item">
+              <div className="tits">
+                <p className="active">添加api接口权限</p>
+              </div>
+              <div>
+                <Input placeholder="请输入api接口权限名称" />
+                <Input placeholder="请输入api接口权限url" />
+                <Input placeholder="请输入api接口权限方法" />
+              </div>
+              <div className="item_box">
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset">重置</Button>
+                </div>
+              </div>
+            </Form.Item>
 
+            <Form.Item className="wrap_item">
+              <div className="tits">
+                <p className="active">添加视图接口权限</p>
+              </div>
+              <div>
+                <Select placeholder="请选择已有视图" style={{ width: 180 }}>
+                  <Option value="管理员">管理员</Option>
+                  <Option value="出题者">出题者</Option>
+                  <Option value="浏览者">管理员</Option>
+                </Select>
+              </div>
+              <div className="item_box">
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset">重置</Button>
+                </div>
+              </div>
+            </Form.Item>
+
+            <Form.Item className="wrap_item">
+              <div className="tits">
+                <p className="active">给身份设置api接口权限</p>
+              </div>
+              <div>
+                <Select placeholder="请选择身份id" style={{ width: 180 }}>
+                  <Option value="管理员">管理员</Option>
+                  <Option value="出题者">出题者</Option>
+                  <Option value="浏览者">管理员</Option>
+                </Select>
+              </div>
+              <div>
+                <Select
+                  placeholder="请选择api接口权限id"
+                  style={{ width: 180 }}
+                >
+                  <Option value="管理员">管理员</Option>
+                  <Option value="出题者">出题者</Option>
+                  <Option value="浏览者">管理员</Option>
+                </Select>
+              </div>
+              <div className="item_box">
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset">重置</Button>
+                </div>
+              </div>
+            </Form.Item>
+            <Form.Item className="wrap_item">
+              <div className="tits">
+                <p className="active">给身份设置视图权限</p>
+              </div>
+              <div>
+                <Select placeholder="请选择身份id" style={{ width: 180 }}>
+                  <Option value="管理员">管理员</Option>
+                  <Option value="出题者">出题者</Option>
+                  <Option value="浏览者">管理员</Option>
+                </Select>
+              </div>
+              <div>
+                <Select placeholder="请选择视图权限id" style={{ width: 180 }}>
+                  <Option value="管理员">管理员</Option>
+                  <Option value="出题者">出题者</Option>
+                  <Option value="浏览者">管理员</Option>
+                </Select>
+              </div>
+              <div className="item_box">
+                <div className="btns">
+                  <Button className="sure">确定</Button>
+                  <Button className="reset">重置</Button>
+                </div>
+              </div>
+            </Form.Item>
+          </Form>
         </div>
-
-
       </div>
-    )
+    );
   }
 }
 
-export default injectIntl(questionsType)
+export default injectIntl(Add)

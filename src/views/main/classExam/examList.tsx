@@ -7,10 +7,11 @@ import "@/styles/classExam/examList.css";
 
 interface Props {
   grade:any,
-  exam:any
+  exam:any,
+  examlist:any
 }
 
-@inject("grade","exam")
+@inject("grade","exam",'examlist')
 @observer
 class ExamList extends React.Component<Props> {
   constructor(props: Props) {
@@ -19,26 +20,35 @@ class ExamList extends React.Component<Props> {
   public getSubject = async () => {
     //获取所有的课程
     const subject = await this.props.grade.getexamsubject();
-    console.log(subject);
+    // console.log(subject);
     this.setState({ examsubjectArr: subject.data });
   };
 
   public getExamType = async () => {
     //获取所有考试类型
     const subject = await this.props.exam.getexamType();
-    console.log(subject);
+    // console.log(subject);
     this.setState({ examType: subject.data });
   };
-
+  
+  public getExamList = async () => {
+    //获取试卷列表
+    const subject = await this.props.examlist.getexamList();
+    subject.exam.map((item: any, index: number) => (item.key = index));
+    console.log(subject);
+    this.setState({ Examlist: subject.exam });
+  };
 
   public componentDidMount() {
     this.getSubject();
     this.getExamType();
+    this.getExamList();
   }
 
   state = {
     examsubjectArr: [],
     examType: [],
+    Examlist:[],
     size: '全部'
   };
 
@@ -46,7 +56,7 @@ class ExamList extends React.Component<Props> {
     this.setState({ size: e.target.value });
   };
   public render() {
-    let { examsubjectArr, examType ,size} = this.state;
+    let { examsubjectArr, examType ,size,Examlist} = this.state;
     
     return (
       <div className="demo-infinite-container">
@@ -60,7 +70,7 @@ class ExamList extends React.Component<Props> {
         >
           <span className="headerIpt">
             考试类型:&emsp;
-          <Select defaultValue="" style={{ width: 230, height: 30 }}>
+          <Select defaultValue="" style={{ width: 150, height: 30 }}>
               {examType &&
                 examType.map((item: any, index: any) => {
                   return (
@@ -73,7 +83,7 @@ class ExamList extends React.Component<Props> {
           </span>
           <span className="headerIpt">
             课程:&emsp;
-            <Select defaultValue="" style={{ width: 230, height: 30 }}>
+            <Select defaultValue="" style={{ width: 150, height: 30 }}>
               {examsubjectArr &&
                 examsubjectArr.map((item: any, index: any) => {
                   return (
@@ -83,7 +93,7 @@ class ExamList extends React.Component<Props> {
                   );
                 })}
             </Select>
-          </span>
+          </span>  
           <span className="headerIpt">
             <Button type="primary" icon="search" >
               查询
@@ -102,15 +112,27 @@ class ExamList extends React.Component<Props> {
             </span>
           </div>
           <div className="dataTable">
-            {/* <Table dataSource={[]} pagination={false}>
-              <Column title="试卷信息" dataIndex="room_text" key="room_text" />
-              <Column title="班级" dataIndex="room_text" key="room_text" />
-              <Column title="创建人" dataIndex="room_text" key="room_text" />
-              <Column title="开始时间" dataIndex="room_text" key="room_text" />
-              <Column title="结束时间" dataIndex="room_text" key="room_text" />
-              <Column title="操作" dataIndex="room_text" key="room_text" />
-              
-            </Table> */}
+            <Table dataSource={Examlist} pagination={false}>
+              <Column title="试卷信息" dataIndex="title" key="title" />
+              <Column title="班级" dataIndex="grade_name" key="grade_name" />
+              <Column title="创建人" dataIndex="user_name" key="user_name" />
+              <Column title="开始时间" dataIndex="start_time" key="start_time" />
+              <Column title="结束时间" key="end_time"
+                render={(text:any, record: any) => (
+                  <span>
+                    {text["end_time"]}
+                    {/* {new Date().toLocaleString(Number(text["end_time"])} */}
+                  </span>
+                )}
+              />
+              <Column title="操作" key="详情"
+                render={(text, record: any) => (
+                  <span>
+                    <a>详情</a>
+                  </span>
+                )}
+              />
+            </Table>
           </div>
         </div>
       </div>

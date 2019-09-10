@@ -10,6 +10,7 @@ import Grade  from './modules/classManagement/grade'
 import Room from './modules/classManagement/room'
 import Student from './modules/classManagement/student'
 import Exam from './modules/classExam/addExam'
+import ExamList from './modules/classExam/examList'
 
 const user=new User()
 const global=new Global()
@@ -22,6 +23,7 @@ const grade = new Grade()
 const room = new Room() 
 const student = new Student()
 const exam = new Exam()
+const examlist = new ExamList()
 
 export default {
   user,
@@ -33,6 +35,7 @@ export default {
   grade,
   room,
   student,  
-  exam
+  exam,
+  examlist
 }
   
