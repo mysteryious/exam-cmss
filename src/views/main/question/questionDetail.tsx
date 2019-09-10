@@ -1,5 +1,7 @@
 import * as React from "react"
 import { inject, observer } from "mobx-react"
+import {injectIntl} from "react-intl"
+
 
 
 interface PropInto {

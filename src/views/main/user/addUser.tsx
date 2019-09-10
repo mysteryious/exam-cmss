@@ -2,6 +2,7 @@ import * as React from "react"
 import { inject, observer } from "mobx-react"
 import { FormComponentProps } from "antd/lib/form/Form"
 import { Radio } from 'antd';
+import {injectIntl} from "react-intl"
 import "@/styles/user/adduser.css"
 
 let tabs = [
@@ -23,12 +24,13 @@ let tabs = [
 ]
 
 interface PropInto {
-  showuser: any
+  showuser: any,
+  intl:any
 }
 
 
-// @inject("question")
-// @observer
+@inject("question")
+@observer
 
 
 class questionsType extends React.Component<PropInto>{
@@ -45,24 +47,6 @@ class questionsType extends React.Component<PropInto>{
     this.setState({ formLayout: e.target.value });
   };
 
-  // public getList = async () => {
-
-  //   //获取试题分类的数据
-  //   const result = await this.props.question.questionDetail({
-  //     questions_id: this.props.match.params.id
-  //   });
-
-  //   this.setState({
-  //     dataSource: result.data
-  //   })
-  // }
-
-  // public componentDidMount() {
-  //   //获取数据
-  //   this.getList()
-  // }
-
-
 
   public onChange(e: { target: any }) {
     console.log(`radio checked:${e.target.value}`);
@@ -70,6 +54,7 @@ class questionsType extends React.Component<PropInto>{
 
   public render() {
     const { dataSource, formLayout } = this.state
+    const {formatMessage}=this.props.intl
     const formItemLayout =
       formLayout === 'horizontal'
         ? {
@@ -87,7 +72,7 @@ class questionsType extends React.Component<PropInto>{
     return (
       <div className="adduser">
         <header>
-          <h2 className="logo-title">添加用户</h2>
+          <h2 className="logo-title">{formatMessage({id:"menu.user.addUser"})}</h2>
         </header>
 
         <div className='adduser-main' style={{ marginBottom: '20px', background: '#fff' }}>
@@ -123,4 +108,4 @@ class questionsType extends React.Component<PropInto>{
   }
 }
 
-export default questionsType
+export default injectIntl(questionsType)

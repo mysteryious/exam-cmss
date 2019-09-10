@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Button, Table, Modal, Input } from 'antd';
 import { array } from 'prop-types';
+import {injectIntl} from "react-intl"
 import { inject, observer } from "mobx-react"
 import "@/styles/question/question.css"
 
@@ -27,7 +28,8 @@ const columns = [
 
 
 interface PropInto {
-  question: any
+  question: any,
+  intl:any
 }
 
 
@@ -101,21 +103,18 @@ class questionsType extends React.Component<PropInto>{
 
   public render() {
     const { dataSource, value } = this.state
-
+    const {formatMessage}=this.props.intl
     return (
       <div className="question">
         <header>
-          <h2 className="logo-title">试题分类</h2>
+          <h2 className="logo-title">{formatMessage({id:"menu.question.questionsType"})}</h2>
         </header>
-
-
         <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
           <Button type='primary' icon='plus' onClick={this.showModal}>
             添加类型
 					</Button>
           <Table columns={columns} dataSource={dataSource} pagination={false} rowKey="questions_type_sort"/>
         </div>
-
 
         <div className="dialog">
           <Modal
@@ -134,4 +133,4 @@ class questionsType extends React.Component<PropInto>{
   }
 }
 
-export default questionsType
+export default injectIntl(questionsType)

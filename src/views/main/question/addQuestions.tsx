@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react"
 import { Layout, Input, Button, Form, Select, Modal, message } from 'antd'
 import { FormComponentProps } from "antd/lib/form/Form";
 import { getocaltion, removeltion } from "@/utils/login"
+import {injectIntl} from "react-intl"
 const { confirm } = Modal;
 const url = require('url')
 const querystring = require("querystring")
@@ -17,7 +18,8 @@ interface PropInto {
   watchquestions: any,
   value: any,
   addQuestions: any,
-  history: any
+  history: any,
+  intl:any
 }
 
 @inject("watchquestions", "question", "addQuestions")
@@ -43,41 +45,9 @@ class addQuestions extends React.Component<PropInto>{
     questions_type_id: ''
   }
 
-  //保存题干的值
-  public onChangestem = (e: { target: any }) => {
-    this.setState({
-      title: e.target.value
-    });
-  };
-  //题目主题
-  handleChange = (value: string) => {
-    this.setState({
-      questions_stem: value
-    })
-  }
-  //考试类型
-  changexaminationType = (value: any) => {
-    this.setState({
-      exam_name: value
-    })
-  }
-  //课程类型
-  changeCourseType = (value: any) => {
-    this.setState({
-      subject_text: value
-    })
-  }
-  //题目类型
-  changeTopicType = (value: any) => {
-    this.setState({
-      questions_type_text: value
-    })
-  }
-  //答案
-  handleChangeQuestion = (value: string) => {
-    this.setState({
-      questions_answer: value
-    })
+
+  handleChange = (value: any, name: string) => {
+    this.setState({ [name]: value })
   }
 
   public showConfirm = () => {
@@ -194,11 +164,12 @@ class addQuestions extends React.Component<PropInto>{
     // * subject_text 课程类型
     // * questions_type_text  题目类型
     // * questions_answer  答案
+    const {formatMessage}=this.props.intl
     const { subject, examType, questionsType, id, title, questions_stem, exam_name, exam_id, subject_text, subject_id, questions_type_text, questions_type_id, questions_answer } = this.state;
     return (
       <div className="question">
         <header>
-          <h2 className="question-title">添加试题</h2>
+          <h2 className="question-title">{formatMessage({id:"menu.question.addQuestions"})}</h2>
         </header>
 
         <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
@@ -206,14 +177,14 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <h3>题目信息</h3>
               <p>题干</p>
-              <Input value={title} className="style_input" onChange={this.onChangestem} />
+              <Input value={title} className="style_input" onChange={e => this.handleChange(e.target.value, "title")} />
             </Form.Item>
 
             <Form.Item>
               <div >
                 <p>题目主题</p>
                 <div className="editorItem">
-                  <Editor value={questions_stem} style={{ height: "600px" }} onChange={this.handleChange.bind(this)} />
+                  <Editor value={questions_stem} style={{ height: "600px" }} onChange={value => this.handleChange(value, "questions_stem")} />
                 </div>
               </div>
             </Form.Item>
@@ -221,21 +192,21 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <div >
                 <p>请选择考试类型</p>
-                <Select value={exam_name} style={{ width: 120 }} onChange={this.changexaminationType}>
+                <Select  style={{ width: 120 }} onChange={(value:any)  => this.handleChange(value,"exam_id")}>
                   {examType && examType.map((item: any, index: number) => {
-                    return <Select.Option key={index} value={item.exam_name}>{item.exam_name}</Select.Option>
+                    return <Select.Option value={item.exam_id} key={index}>{item.exam_name}</Select.Option>
                   })}
                 </Select>
                 <p>请选择课程类型</p>
-                <Select value={subject_text} style={{ width: 120 }} onChange={this.changeCourseType}>
+                <Select  style={{ width: 120 }} onChange={(value:any) => this.handleChange(value, "subject_id")}>
                   {subject && subject.map((item: any, index: number) => {
-                    return <Select.Option key={index} value={item.subject_text}>{item.subject_text}</Select.Option>
+                    return <Select.Option key={index} value={item.subject_id}>{item.subject_text}</Select.Option>
                   })}
                 </Select>
                 <p>请选择题目类型</p>
-                <Select value={questions_type_text} style={{ width: 120 }} onChange={this.changeTopicType}>
+                <Select style={{ width: 120 }} onChange={(value:any)  => this.handleChange(value, "questions_type_id")}>
                   {questionsType && questionsType.map((item: any, index: number) => {
-                    return <Select.Option key={index} value={item.questions_type_text}>{item.questions_type_text}</Select.Option>
+                    return <Select.Option value={item.questions_type_id} key={index}>{item.questions_type_text}</Select.Option>
                   })}
                 </Select>
               </div>
@@ -245,7 +216,7 @@ class addQuestions extends React.Component<PropInto>{
               <div >
                 <h2>答案信息</h2>
                 <div className="editorItem">
-                  <Editor value={questions_answer} style={{ height: "600px" }} onChange={this.handleChangeQuestion.bind(this)} />
+                  <Editor value={questions_answer} style={{ height: "600px" }} onChange={value => this.handleChange(value, "questions_answer")} />
                 </div>
               </div>
             </Form.Item>
@@ -263,4 +234,4 @@ class addQuestions extends React.Component<PropInto>{
 
 }
 
-export default addQuestions
+export default injectIntl(addQuestions)

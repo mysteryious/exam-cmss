@@ -1,5 +1,13 @@
 //老师的登录接口
 export const Userlogin='/user/login'
+// 获取用户信息
+export const userInfo = '/user/userInfo'
+
+
+// 获取用户权限
+export let getViewAuthority = '/user/view_authority'
+
+
 // 获取试题
 export const getQuestion='/exam/getQuestionsType'
 // 获取课程安排
