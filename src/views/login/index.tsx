@@ -29,9 +29,16 @@ class Login extends React.Component<UserFormProps, any> {
             <Form.Item>
               {getFieldDecorator("user_name", {
                 initialValue: user_name,
-                rules: [
-                  { required: true, message: "Please input your user_name!" }
-                ]
+                validateTrigger: 'onBlur',
+                rules: [{
+                  validator: (ruler, value, callback) => {
+                    if (/[a-z]{5,20}/.test(value)) {
+                      callback()
+                    } else {
+                      callback('Please input your username!')
+                    }
+                  }
+                }]
               })(
                 <Input
                   prefix={
@@ -44,9 +51,16 @@ class Login extends React.Component<UserFormProps, any> {
             <Form.Item>
               {getFieldDecorator("user_pwd", {
                 initialValue: user_pwd,
-                rules: [
-                  { required: true, message: "Please input your user_pwd!" }
-                ]
+                validateTrigger: 'onBlur',
+                rules: [{
+                  validator: (ruler, value, callback) => {
+                    if (/^(?![a-z]+$)(?![A-Z]+$)(?!([^(a-zA-Z\!\*\.\#)])+$)^.{8,16}$/.test(value)) {
+                      callback()
+                    } else {
+                      callback('Please input your Password!')
+                    }
+                  }
+                }],
               })(
                 <Input
                   prefix={

@@ -1,37 +1,38 @@
 import * as React from "react";
-import { Table, Divider, Tag, Button,Modal,Input,Select } from "antd";
-const {Option} = Select;
+import { Table, Divider, Tag, Button, Modal, Input, Select, Form } from "antd";
+import { FormComponentProps } from "antd/lib/form";
+const { Option } = Select;
 const { Column, ColumnGroup } = Table;
 
 import { observer, inject } from "mobx-react";
 import "@/styles/classMangement/grade.css";
-import { array } from 'prop-types';
+import { array } from "prop-types";
 
-interface Props {
+interface Props extends FormComponentProps {
   grade: any;
   data: any;
-  room_text:any;
-  grade_name:any;
-  subject_id:any;
-  buZhouList:any;
-  room:any;
-  text:any
+  room_text: any;
+  grade_name: any;
+  subject_id: any;
+  buZhouList: any;
+  room: any;
+  text: any;
+  getFieldDecorator: any;
 }
 
-@inject("grade",'room')
+@inject("grade", "room")
 @observer
-class ClassMangement extends React.Component<Props> {
+class ClassMangement extends React.Component<Props,any> {
   constructor(props: Props) {
     super(props);
   }
-
 
   //更新表格数据
   public getList = async () => {
     //获取已经分配教室的班级
     const subject = await this.props.grade.getmangergrade();
     // console.log(subject)
-    subject.data.map((item:any,index:number)=>item.key=index)
+    subject.data.map((item: any, index: number) => (item.key = index));
     this.setState({ data: subject.data });
   };
 
@@ -49,93 +50,117 @@ class ClassMangement extends React.Component<Props> {
     this.setState({ examsubjectArr: subject.data });
   };
 
-
   public componentDidMount() {
     this.getList();
     this.getSubject();
-    this.getsubjectAll()
+    this.getsubjectAll();
   }
   state = {
     data: [],
     visible: false,
-    subjectArr:[],
-    examsubjectArr:[],
-    subjectAll:[],
-    gradeVal:'',
-    subjectVal:'',
-    bjVal:'',
-    disabled:false,
-    roomtext:'请选择教室号',
-    subjecttext:'课程名',
-    open:false,
-    gradeid:''
-    
+    subjectArr: [],
+    examsubjectArr: [],
+    subjectAll: [],
+    gradeVal: "",
+    subjectVal: "",
+    bjVal: "",
+    disabled: false,
+    roomtext: "请选择教室号",
+    subjecttext: "课程名",
+    open: false,
+    gradeid: ""
   };
   //弹出框
   showModal = () => {
     this.setState({
       visible: true,
-      disabled:false,
-      open:false
+      disabled: false,
+      open: false
     });
   };
-//点击提交按钮
+  //点击提交按钮
   handleOks = async (e: any) => {
-    let {gradeVal,subjectVal,bjVal,gradeid,disabled} = this.state;
-    if(disabled){
-      const gradeupdate = await this.props.grade.mangergradeupdate({grade_id: gradeid,grade_name: bjVal,room_id: gradeVal,subject_id: subjectVal});
-      console.log(gradeupdate,"----------------")
-    }else{
-      const subject = await this.props.grade.addmangergrade({grade_name:bjVal,room_id	:gradeVal,subject_id:subjectVal});
+    let { gradeVal, subjectVal, bjVal, gradeid, disabled } = this.state;
+    if (disabled) {
+      const gradeupdate = await this.props.grade.mangergradeupdate({
+        grade_id: gradeid,
+        grade_name: bjVal,
+        room_id: gradeVal,
+        subject_id: subjectVal
+      });
+      console.log(gradeupdate, "----------------");
+    } else {
+      const subject = await this.props.grade.addmangergrade({
+        grade_name: bjVal,
+        room_id: gradeVal,
+        subject_id: subjectVal
+      });
     }
-    this.getList()
+    this.getList();
     Modal.destroyAll();
     this.setState({
       visible: false,
-      bjVal:'',
-      open:true,
-      roomtext:'请选择教室号',
-      subjecttext:'课程名',
+      bjVal: "",
+      open: true,
+      roomtext: "请选择教室号",
+      subjecttext: "课程名"
     });
   };
   //点击删除按钮
-  deletegrade = async (text:any)=>{
-    const deleteres = await this.props.grade.deletemangergrade({grade_id:text.grade_id});
-    console.log(deleteres)
-    this.getList()
-  }
+  deletegrade = async (text: any) => {
+    const deleteres = await this.props.grade.deletemangergrade({
+      grade_id: text.grade_id
+    });
+    console.log(deleteres);
+    this.getList();
+  };
 
+  //点击修改按钮
+  amend = async (text: any) => {
+    // console.log(text)
+    this.setState({
+      visible: true,
+      disabled: true,
+      bjVal: text.grade_name,
+      roomtext: text.room_text,
+      subjecttext: text.subject_text,
+      gradeid: text.grade_id
+    });
+  };
 
-//点击修改按钮
-amend = async (text:any)=>{
-  // console.log(text)
-  this.setState({visible:true,disabled:true,bjVal:text.grade_name,roomtext:text.room_text,subjecttext:text.subject_text,gradeid:text.grade_id})
-}
-
-//点击取消按钮
+  //点击取消按钮
   handleCancel = (e: any) => {
     Modal.destroyAll();
     this.setState({
       visible: false,
-      bjVal:'',
-      open:true,
-      roomtext:'请选择教室号',
-      subjecttext:'课程名',
+      bjVal: "",
+      open: true,
+      roomtext: "请选择教室号",
+      subjecttext: "课程名"
     });
   };
 
   //选择教室下拉菜单
-  gradeChange = (value:any) => {
-    this.setState({gradeVal:value})
+  gradeChange = (value: any) => {
+    this.setState({ gradeVal: value });
   };
 
-   //选择课程下拉菜单
-  subjectChange = (value:any) => {
-    this.setState({subjectVal:value})
+  //选择课程下拉菜单
+  subjectChange = (value: any) => {
+    this.setState({ subjectVal: value });
   };
   public render() {
-    let { data,examsubjectArr ,subjectAll,disabled,bjVal,roomtext,subjecttext,open} = this.state;
-    
+    let {
+      data,
+      examsubjectArr,
+      subjectAll,
+      disabled,
+      bjVal,
+      roomtext,
+      subjecttext,
+      open
+    } = this.state;
+    let { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
@@ -157,31 +182,89 @@ amend = async (text:any)=>{
             okText={"确定"}
             destroyOnClose={true}
           >
-            <p>班级名:</p>
-            <Input
-              placeholder="班级名"
-              disabled={disabled}
-              value={bjVal}
-              onChange={(e)=>{
-                this.setState({bjVal:e.target.value})
-              }}
-            />
-            <p>教室号:</p>
-            <Select placeholder="请选择教室号" defaultValue={roomtext} defaultActiveFirstOption={false} style={{ width: "100%"}} onSelect	={this.gradeChange}>
-              {
-                subjectAll && subjectAll.map((item:any,index:any)=>{
-                 return <Option value={item.room_id} key={item.room_text}>{item.room_text}</Option>
-                })
-              }
-            </Select>
-            <p>课程名:</p>
-            <Select placeholder="课程名" defaultValue={subjecttext} defaultActiveFirstOption={false} style={{ width: "100%" }}  onSelect	={this.subjectChange}  >
-              {
-                examsubjectArr && examsubjectArr.map((item:any,index:any)=>{
-                  return  <Option value={item.subject_id} key={item.subject_text}>{item.subject_text}</Option>
-                })
-              }
-            </Select>
+            <Form>
+              <Form.Item label="班级名" hasFeedback>
+                {getFieldDecorator("grade", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your grade!"
+                    }
+                  ]
+                })(
+                  <Input
+                    placeholder="班级名"
+                    disabled={disabled}
+                    value={bjVal}
+                    onChange={e => {
+                      this.setState({ bjVal: e.target.value });
+                    }}
+                  />
+                )}
+              </Form.Item>
+
+              <Form.Item label="教室号" hasFeedback>
+                {getFieldDecorator("subject", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your subject!"
+                    }
+                  ]
+                })(
+                  <Select
+                    placeholder="请选择教室号"
+                    defaultValue={roomtext}
+                    defaultActiveFirstOption={false}
+                    style={{ width: "100%" }}
+                    onSelect={this.gradeChange}
+                  >
+                    {subjectAll &&
+                      subjectAll.map((item: any, index: any) => {
+                        return (
+                          <Option value={item.room_id} key={item.room_text}>
+                            {item.room_text}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
+              </Form.Item>
+
+              <Form.Item label="课程名" hasFeedback>
+                {getFieldDecorator("examsubject", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your examsubject!"
+                    }
+                  ]
+                })(
+                  <Select
+                    placeholder="课程名"
+                    defaultValue={subjecttext}
+                    defaultActiveFirstOption={false}
+                    style={{ width: "100%" }}
+                    onSelect={this.subjectChange}
+                  >
+                    {examsubjectArr &&
+                      examsubjectArr.map((item: any, index: any) => {
+                        return (
+                          <Option
+                            value={item.subject_id}
+                            key={item.subject_text}
+                          >
+                            {item.subject_text}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
+              </Form.Item>
+            </Form>
           </Modal>
           <Table dataSource={data} pagination={false}>
             <Column title="班级名" dataIndex="grade_name" key="grade_name" />
@@ -194,11 +277,11 @@ amend = async (text:any)=>{
             <Column
               title="操作"
               key="操作"
-              render={(text:any, record: any) => (
+              render={(text: any, record: any) => (
                 <span>
-                  <a onClick={this.amend.bind(this,text)}>修改</a>
+                  <a onClick={this.amend.bind(this, text)}>修改</a>
                   <Divider type="vertical" />
-                  <a onClick={this.deletegrade.bind(this,text)}>删除</a>
+                  <a onClick={this.deletegrade.bind(this, text)}>删除</a>
                 </span>
               )}
             />
@@ -209,4 +292,4 @@ amend = async (text:any)=>{
   }
 }
 
-export default ClassMangement;
+export default Form.create()(ClassMangement);

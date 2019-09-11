@@ -19,4 +19,4 @@ export default {
 
   'menu.mark': '阅卷管理',
   'menu.mark.vip': '待批班级',
-}
+}  
