@@ -1,7 +1,7 @@
-.ant-layout{
+.ant-layout {
   height: 100%;
 }
-.ant-layout-sider-children{
+.ant-layout-sider-children {
   height: 100%;
   overflow: auto;
 }
@@ -30,7 +30,18 @@
 }
 
 .header .dropdown {
+  padding: 0px 10px;
   float: right;
+}
+.header .ant-dropdown-open {
+  background: #eee;
+}
+
+.ant-upload {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  font-size: 10px;
 }
 
 .ant-menu-item-selected {

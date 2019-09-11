@@ -4,12 +4,14 @@ import { Layout, Input, Button, Form, Select, Modal, message } from 'antd'
 import { FormComponentProps } from "antd/lib/form/Form";
 import { getocaltion, removeltion } from "@/utils/login"
 import {injectIntl} from "react-intl"
+import Editor from 'for-editor'
+import "@/styles/question/addQuestions.css"
+
 const { confirm } = Modal;
 const url = require('url')
 const querystring = require("querystring")
 
-import Editor from 'for-editor'
-import "@/styles/question/addQuestions.css"
+
 
 interface PropInto {
   question: any,
@@ -155,7 +157,6 @@ class addQuestions extends React.Component<PropInto>{
         questions_answer
       })
     }
-
   }
   public render() {
     // * title  题干

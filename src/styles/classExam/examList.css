@@ -1,52 +1,51 @@
 .ant-btn {
-    height:30px;
-    padding: 0 40px !important;
-    border-radius: 4px !important;
-    border: 0 !important;
-    font-size: 14px !important;
-    color: #fff !important;
-    background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
-  }
-  .main {
-    background: rgb(255, 255, 255);
-    padding: 24px;
-    margin: 0px 0px 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    
-  }
-  
-  .question-title {
-    padding: 20px 0px;
-    margin-top: 10px;  
-  }
-  .ant-form-item {
-    color: rgba(0, 0, 0, 0.85) !important;
-  }
-  .ant-input {
-    padding: 6px 11px;
-    height: 40px;
-    font-size: 16px;
-  }
-  .for-container {
-    height: auto!important;
-    font-size: 16px!important;
-    min-height: 100%;
-  }
-  .iptbox{
-      margin-top: 20px;
-  }
-  .headerIpt{
-    float: left;
-    margin-right: 100px;
-  }
-  .examlist{
-      overflow: hidden;
-      margin-bottom: 15px;
-  }
-  .examtitle{
-      float: left;
-  }
-  .tabbtn{
-      float: right;
-  }
+  height: 30px;
+  padding: 0 40px !important;
+  border-radius: 4px !important;
+  border: 0 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+}
+.main {
+  background: rgb(255, 255, 255);
+  padding: 24px;
+  margin: 0px 0px 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.question-title {
+  padding: 20px 0px;
+  margin-top: 10px;
+}
+.ant-form-item {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+.ant-input {
+  padding: 6px 11px;
+  height: 40px;
+  font-size: 16px;
+}
+.for-container {
+  height: auto !important;
+  font-size: 16px !important;
+  min-height: 100%;
+}
+.iptbox {
+  margin-top: 20px;
+}
+.headerIpt {
+  float: left;
+  margin-right: 100px;
+}
+.examlist {
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.examtitle {
+  float: left;
+}
+.tabbtn {
+  float: right;
+}

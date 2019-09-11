@@ -1,5 +1,5 @@
 import { observable, action } from "mobx"
-import { userLogin, getUserInfo, getViewAuthority } from "@/api/user"
+import { userLogin, getUserInfo, getViewAuthority,updateUser } from "@/api/user"
 import { getocaltion, setocaltion, removeltion } from "@/utils/login"
 import { setToken } from "@/utils/cookie"
 
@@ -16,7 +16,7 @@ class User {
     @observable account: any = getocaltion("account") === null ? "" : getocaltion("account")
     @observable userInfo: object = {}
     @observable viewAuthority: object[] = [];
-
+    @observable avatar: string = '';
 
     @action async login(from: LoginFrom): Promise<object> {
         const result: any = await userLogin(from);
@@ -36,12 +36,15 @@ class User {
         }
         return { ...result }
     }
-    @action async getUserInfo() {
-        const userInfo: any = await getUserInfo();
+    // 获取用户信息
+    @action async getUserInfo(): Promise<any> {
+        let userInfo: any = await getUserInfo();
         this.userInfo = userInfo.data;
+        this.avatar = userInfo.data.avatar;
         this.getViewAuthority();
         return userInfo.data
     }
+
     // 获取用户权限
     @action async getViewAuthority(): Promise<any> {
         let viewAuthority: any = await getViewAuthority();
@@ -49,6 +52,16 @@ class User {
         return viewAuthority.data
     }
 
+
+    // 更新用户信息
+    @action async updateUser(params:any): Promise<any> {
+        this.avatar = params.avatar;
+        
+        // let viewAuthority: any = await updateUser(params);
+        // console.log(params)
+        // this.viewAuthority = viewAuthority.data;
+        // return viewAuthority.data
+    }
 }
 
 export default User

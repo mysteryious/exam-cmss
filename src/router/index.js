@@ -1,4 +1,4 @@
-import React, { Suspense,Component } from "react";
+import React, { Suspense, Component } from "react";
 import { BrowserRouter } from 'react-router-dom'
 import RouteConfig from "./RouteConfig"
 import RouteView from "./RouteView"
@@ -16,9 +16,6 @@ class RouterIndex extends Component {
 }
 
 export default RouterIndex
-
-
-
 
 
 

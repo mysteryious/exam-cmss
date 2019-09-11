@@ -38,7 +38,7 @@ const RouteConfig = [
         view_id: "main-showUser"
       },
 
-
+      
       {//班级管理
         component: React.lazy(() => import("@/views/main/classManagement/grade")),
         path: "/main/grade",

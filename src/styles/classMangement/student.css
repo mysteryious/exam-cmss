@@ -4,13 +4,3 @@
 .iptbox {
   width: 100%;
 }
-.ant-btn {
-  padding: 0 40px !important;
-  border-radius: 4px !important;
-  border: 0 !important;
-  height: 40px;
-  font-size: 14px !important;
-  color: #fff !important;
-  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
-  margin-bottom: 25px;
-}

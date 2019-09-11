@@ -3,8 +3,8 @@ import request from "../utils/request"
 
 
 //用户登录
-export let userLogin = (data: object) => {
-    return request.post(port.Userlogin, data)
+export let userLogin = (params: object) => {
+    return request.post(port.Userlogin, params)
 }
 // 获取用户信息
 export let getUserInfo = () => {
@@ -14,6 +14,12 @@ export let getUserInfo = () => {
 export let getViewAuthority = ()=>{
     return request.get(port.getViewAuthority);
 }
+// 更新用户信息
+export let updateUser = (params: object)=>{
+    console.log(params)
+    return request.put(port.updateUser,params);
+}
+
 
 
 //用户展示
@@ -36,6 +42,7 @@ export let identity_api_authority_relation = () => {
 export let view_authority = () => {
     return request.get(port.view_authority);
 }
+
 //展示身份和视图权限关系
 export let identity_view_authority_relation = () => {
     return request.get(port.identity_view_authority_relation);

@@ -1,6 +1,5 @@
 
 import { inject, observer } from "mobx-react"
-import { Radio } from 'antd';
 import {injectIntl} from "react-intl"
 import * as React from "react";
 import { Form, Button, Input, Select, Radio } from "antd";

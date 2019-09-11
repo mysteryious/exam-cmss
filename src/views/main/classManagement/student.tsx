@@ -1,19 +1,12 @@
 import * as React from "react";
-import {
-  Table,
-  Divider,
-  Tag,
-  Button,
-  Pagination,
-  Form,
-  Input,
-  Select
-} from "antd";
-const { Column, ColumnGroup } = Table;
-const { Option } = Select;
+import { Table, Divider, Tag, Button, Pagination, Form, Input, Select } from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 import { observer, inject } from "mobx-react";
+import { injectIntl } from "react-intl"
 import "@/styles/classMangement/student.css";
+
+const { Column, ColumnGroup } = Table;
+const { Option } = Select;
 
 interface Props extends FormComponentProps {
   student: any;
@@ -62,60 +55,60 @@ class ClassMangement extends React.Component<Props> {
     mangerstudentAll: [],
     subjectAll: [],
     mangergradeAll: [],
-    student_name:'',
-    room_text:'',
-    grade_name:''
+    student_name: '',
+    room_text: '',
+    grade_name: ''
   };
   //获取ipt的值
   handleNumberChange = (e: any) => {
     // console.log(e.target.value);
-    this.setState({student_name:e.target.value})
+    this.setState({ student_name: e.target.value })
   };
   //教室号的下拉菜单
   roomChange = (e: any) => {
-    this.setState({room_text:e})
+    this.setState({ room_text: e })
   };
   //班级号的下拉菜单
   gradeChange = (e: any) => {
-    this.setState({grade_name:e})
+    this.setState({ grade_name: e })
   };
   //点击搜索按钮
   handleSubmit = () => {
-    let {mangerstudentAll, student_name,room_text,grade_name} = this.state;
+    let { mangerstudentAll, student_name, room_text, grade_name } = this.state;
     // console.log(student_name,room_text,grade_name)
-    let filterArr = mangerstudentAll.filter((item:any,index:any)=>{
-      
-      if(student_name){
+    let filterArr = mangerstudentAll.filter((item: any, index: any) => {
+
+      if (student_name) {
         return item.student_name == student_name
-      }else if(room_text){
+      } else if (room_text) {
         return item.room_text == room_text
-      }else if(grade_name){
+      } else if (grade_name) {
         return item.grade_name == grade_name
-      }else if(student_name&&room_text){
-        return item.student_name == student_name &&item.room_text == room_text 
-      }else if(student_name&&grade_name){
-        return item.student_name == student_name &&item.grade_name == grade_name 
-      }else if(room_text&&grade_name){
-        return item.room_text == room_text &&item.grade_name == grade_name 
-      }else if(student_name&&room_text&&grade_name){
-        return item.grade_name == grade_name&&item.room_text == room_text && item.student_name == student_name
-      }else{
+      } else if (student_name && room_text) {
+        return item.student_name == student_name && item.room_text == room_text
+      } else if (student_name && grade_name) {
+        return item.student_name == student_name && item.grade_name == grade_name
+      } else if (room_text && grade_name) {
+        return item.room_text == room_text && item.grade_name == grade_name
+      } else if (student_name && room_text && grade_name) {
+        return item.grade_name == grade_name && item.room_text == room_text && item.student_name == student_name
+      } else {
         return mangerstudentAll
       }
     })
     // console.log(filterArr)
-    this.setState({mangerstudentAll:filterArr})
+    this.setState({ mangerstudentAll: filterArr })
 
   };
   //点击重置按钮
   reset = () => {
     this.props.form.resetFields();
-    this.setState({student_name:'',room_text:'',grade_name:''})
+    this.setState({ student_name: '', room_text: '', grade_name: '' })
     this.getList()
   };
   //点击删除按钮
-  deleteTabble = async(text:any)=>{
-    const subject = await this.props.student.deletemangerstudent({id:text.student_id});
+  deleteTabble = async (text: any) => {
+    const subject = await this.props.student.deletemangerstudent({ id: text.student_id });
     // console.log(subject)
     this.getList();
   }
@@ -222,7 +215,7 @@ class ClassMangement extends React.Component<Props> {
               key="操作"
               render={(text, record: any) => (
                 <span>
-                  <a onClick={this.deleteTabble.bind(this,text)}>删除</a>
+                  <a onClick={this.deleteTabble.bind(this, text)}>删除</a>
                 </span>
               )}
             />

@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Table, Divider, Tag, Button, Modal, Input, Form } from "antd";
-const { Column, ColumnGroup } = Table;
-const { confirm } = Modal;
 import { FormComponentProps } from "antd/lib/form/Form";
 import { observer, inject } from "mobx-react";
-import "@/styles/classMangement/room.css";
+import {injectIntl} from "react-intl"
+import "@/styles/classMangement/grade.css";
+
+const { Column, ColumnGroup } = Table;
+const { confirm } = Modal;
 
 interface Props extends FormComponentProps {
   room: any;

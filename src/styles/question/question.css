@@ -4,7 +4,7 @@
   border-radius: 10px;
 }
 
-.question .main .ant-btn {
+/* .question .main .ant-btn {
   padding: 0 40px !important;
   border-radius: 4px !important;
   border: 0 !important;
@@ -13,10 +13,9 @@
   color: #fff !important;
   background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
   margin-bottom: 25px;
-}
+} */
 
 .ant-btn-primary {
-  height: 40px;
   padding: 0 40px !important;
   border-radius: 4px !important;
   border: 0 !important;

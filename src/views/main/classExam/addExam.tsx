@@ -22,7 +22,7 @@ interface Props {
   grade: any;
   subject_id: any;
   exam: any;
-  moment:any
+  moment: any
 }
 
 @inject("room", "grade", "exam")
@@ -34,17 +34,15 @@ class AddExam extends React.Component<Props> {
 
   public getSubject = async () => {
     //获取所有的课程
-    const subject = await this.props.grade.getexamsubject();
-    console.log(subject);
-    this.setState({ examsubjectArr: subject.data });
+    const examsubjectArr = await this.props.grade.getexamsubject();
+    //获取所有考试类型
+    const examType = await this.props.exam.getexamType();
+    this.setState({
+      examType: examType.data,
+      examsubjectArr: examsubjectArr.data
+    });
   };
 
-  public getExamType = async () => {
-    //获取所有考试类型
-    const subject = await this.props.exam.getexamType();
-    console.log(subject);
-    this.setState({ examType: subject.data });
-  };
 
   handleNumberChange = (value: any) => {
     console.log(value);
@@ -59,12 +57,10 @@ class AddExam extends React.Component<Props> {
     examType: [],
     inputNumber: ""
   };
+
   public componentDidMount() {
     this.getSubject();
-    this.getExamType();
   }
-
-
 
   public render() {
     let { examsubjectArr, examType, inputNumber } = this.state;
@@ -85,14 +81,13 @@ class AddExam extends React.Component<Props> {
           <div className="iptbox">
             <p>选择考试类型:</p>
             <Select defaultValue="" style={{ width: 130, height: 30 }}>
-              {examType &&
-                examType.map((item: any, index: any) => {
-                  return (
-                    <Option value={item.exam_id} key={item.exam_id}>
-                      {item.exam_name}
-                    </Option>
-                  );
-                })}
+              {examType && examType.map((item: any, index: any) => {
+                return (
+                  <Option value={item.exam_id} key={item.exam_id}>
+                    {item.exam_name}
+                  </Option>
+                );
+              })}
             </Select>
           </div>
           <div className="iptbox">
@@ -124,7 +119,7 @@ class AddExam extends React.Component<Props> {
                 }
               }}
               showToday={true}
-              
+
               format="YYYY-MM-DD HH:mm:ss"
               disabledDate={disabledDate}
               disabledTime={disabledDateTime}
@@ -144,7 +139,7 @@ class AddExam extends React.Component<Props> {
                 }
               }}
               showToday={true}
-              
+
               format="YYYY-MM-DD HH:mm:ss"
               disabledDate={disabledDate}
               disabledTime={disabledDateTime}
@@ -160,9 +155,9 @@ class AddExam extends React.Component<Props> {
       </div>
     );
   }
-  
+
 }
-function range(start:any, end:any) {
+function range(start: any, end: any) {
   const result = [];
   for (let i = start; i < end; i++) {
     result.push(i);
@@ -170,7 +165,7 @@ function range(start:any, end:any) {
   return result;
 }
 
-function disabledDate(current:any) {
+function disabledDate(current: any) {
   return current && current < Moment().endOf('day');
 }
 

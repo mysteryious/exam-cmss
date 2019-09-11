@@ -1,11 +1,14 @@
 import axios from "axios"
-import {getToken} from './cookie';
+import { getToken } from './cookie';
 
 const request = axios.create({
   baseURL: 'http://127.0.0.1:7001',
   timeout: 1000,
-  headers: {'authorization': getToken()}
-});
+  headers: {
+    'authorization': getToken(),
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+})
 
 request.interceptors.request.use(config => {
   return config

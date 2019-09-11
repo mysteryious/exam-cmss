@@ -2,6 +2,8 @@
 export const Userlogin='/user/login'
 // 获取用户信息
 export const userInfo = '/user/userInfo'
+//更新用户信息
+export const updateUser = '/user/user'
 
 
 // 获取用户权限
