@@ -105,11 +105,11 @@ class ClassMangement extends React.Component<Props> {
             okText={"确定"}
           >
             <Form.Item label="教室号" hasFeedback>
-              {getFieldDecorator("password", {
+              {getFieldDecorator("room", {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your password!"
+                    message: "Please input your room!"
                   }
                 ]
               })(

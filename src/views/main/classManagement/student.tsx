@@ -73,26 +73,29 @@ class ClassMangement extends React.Component<Props> {
     this.setState({ grade_name: e })
   };
   //点击搜索按钮
-  handleSubmit = () => {
-    let { mangerstudentAll, student_name, room_text, grade_name } = this.state;
-    // console.log(student_name,room_text,grade_name)
-    let filterArr = mangerstudentAll.filter((item: any, index: any) => {
-
-      if (student_name) {
-        return item.student_name == student_name
-      } else if (room_text) {
-        return item.room_text == room_text
-      } else if (grade_name) {
+  handleSubmit =async () => {
+    let { student_name,room_text,grade_name} = this.state;
+    
+    const subject = await this.props.student.getmangerstudent();
+    subject.data.map((item: any, index: number) => (item.key = index));
+    let mangerstudentAll = subject.data;
+    let filterArr = mangerstudentAll; 
+    filterArr = mangerstudentAll.filter((item:any,index:any)=>{
+      if(student_name&&room_text&&grade_name){
+        return item.grade_name == grade_name&&item.room_text == room_text && item.student_name == student_name
+      }else if(room_text&&grade_name){
+        return item.room_text == room_text &&item.grade_name == grade_name 
+      }else if(student_name&&grade_name){
+        return item.student_name == student_name &&item.grade_name == grade_name 
+      }else if(student_name&&room_text){
+        return item.student_name == student_name &&item.room_text == room_text 
+      }else if(grade_name){
         return item.grade_name == grade_name
-      } else if (student_name && room_text) {
-        return item.student_name == student_name && item.room_text == room_text
-      } else if (student_name && grade_name) {
-        return item.student_name == student_name && item.grade_name == grade_name
-      } else if (room_text && grade_name) {
-        return item.room_text == room_text && item.grade_name == grade_name
-      } else if (student_name && room_text && grade_name) {
-        return item.grade_name == grade_name && item.room_text == room_text && item.student_name == student_name
-      } else {
+      }else if(room_text){
+        return item.room_text == room_text
+      }else if(student_name){
+        return item.student_name == student_name
+      }else{
         return mangerstudentAll
       }
     })

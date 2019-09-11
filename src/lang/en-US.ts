@@ -19,4 +19,4 @@ export default {
 
   'menu.mark': 'MarkManage',
   'menu.mark.vip': 'Beapproved',
-}
+}  

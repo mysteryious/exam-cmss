@@ -12,7 +12,7 @@ const { Column, ColumnGroup } = Table;
 
 
 
-interface Props {
+interface Props extends FormComponentProps {
   grade: any;
   data: any;
   room_text: any;
@@ -20,23 +20,23 @@ interface Props {
   subject_id: any;
   buZhouList: any;
   room: any;
-  text: any
+  text: any;
+  getFieldDecorator: any;
 }
 
-@inject("grade", 'room')
+@inject("grade", "room")
 @observer
-class ClassMangement extends React.Component<Props> {
+class ClassMangement extends React.Component<Props,any> {
   constructor(props: Props) {
     super(props);
   }
-
 
   //更新表格数据
   public getList = async () => {
     //获取已经分配教室的班级
     const subject = await this.props.grade.getmangergrade();
     // console.log(subject)
-    subject.data.map((item: any, index: number) => item.key = index)
+    subject.data.map((item: any, index: number) => (item.key = index));
     this.setState({ data: subject.data });
   };
 
@@ -54,11 +54,10 @@ class ClassMangement extends React.Component<Props> {
     this.setState({ examsubjectArr: subject.data });
   };
 
-
   public componentDidMount() {
     this.getList();
     this.getSubject();
-    this.getsubjectAll()
+    this.getsubjectAll();
   }
   state = {
     data: [],
@@ -66,15 +65,14 @@ class ClassMangement extends React.Component<Props> {
     subjectArr: [],
     examsubjectArr: [],
     subjectAll: [],
-    gradeVal: '',
-    subjectVal: '',
-    bjVal: '',
+    gradeVal: "",
+    subjectVal: "",
+    bjVal: "",
     disabled: false,
-    roomtext: '请选择教室号',
-    subjecttext: '课程名',
+    roomtext: "请选择教室号",
+    subjecttext: "课程名",
     open: false,
-    gradeid: ''
-
+    gradeid: ""
   };
   //弹出框
   showModal = () => {
@@ -93,7 +91,7 @@ class ClassMangement extends React.Component<Props> {
     } else {
       const subject = await this.props.grade.addmangergrade({ grade_name: bjVal, room_id: gradeVal, subject_id: subjectVal });
     }
-    this.getList()
+    this.getList();
     Modal.destroyAll();
     this.setState({
       visible: false,
@@ -114,33 +112,49 @@ class ClassMangement extends React.Component<Props> {
   //点击修改按钮
   amend = async (text: any) => {
     // console.log(text)
-    this.setState({ visible: true, disabled: true, bjVal: text.grade_name, roomtext: text.room_text, subjecttext: text.subject_text, gradeid: text.grade_id })
-  }
+    this.setState({
+      visible: true,
+      disabled: true,
+      bjVal: text.grade_name,
+      roomtext: text.room_text,
+      subjecttext: text.subject_text,
+      gradeid: text.grade_id
+    });
+  };
 
   //点击取消按钮
   handleCancel = (e: any) => {
     Modal.destroyAll();
     this.setState({
       visible: false,
-      bjVal: '',
+      bjVal: "",
       open: true,
-      roomtext: '请选择教室号',
-      subjecttext: '课程名',
+      roomtext: "请选择教室号",
+      subjecttext: "课程名"
     });
   };
 
   //选择教室下拉菜单
   gradeChange = (value: any) => {
-    this.setState({ gradeVal: value })
+    this.setState({ gradeVal: value });
   };
 
   //选择课程下拉菜单
   subjectChange = (value: any) => {
-    this.setState({ subjectVal: value })
+    this.setState({ subjectVal: value });
   };
   public render() {
-    let { data, examsubjectArr, subjectAll, disabled, bjVal, roomtext, subjecttext, open } = this.state;
-
+    let {
+      data,
+      examsubjectArr,
+      subjectAll,
+      disabled,
+      bjVal,
+      roomtext,
+      subjecttext,
+      open
+    } = this.state;
+    let { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
@@ -162,31 +176,89 @@ class ClassMangement extends React.Component<Props> {
             okText={"确定"}
             destroyOnClose={true}
           >
-            <p>班级名:</p>
-            <Input
-              placeholder="班级名"
-              disabled={disabled}
-              value={bjVal}
-              onChange={(e) => {
-                this.setState({ bjVal: e.target.value })
-              }}
-            />
-            <p>教室号:</p>
-            <Select placeholder="请选择教室号" defaultValue={roomtext} defaultActiveFirstOption={false} style={{ width: "100%" }} onSelect={this.gradeChange}>
-              {
-                subjectAll && subjectAll.map((item: any, index: any) => {
-                  return <Option value={item.room_id} key={item.room_text}>{item.room_text}</Option>
-                })
-              }
-            </Select>
-            <p>课程名:</p>
-            <Select placeholder="课程名" defaultValue={subjecttext} defaultActiveFirstOption={false} style={{ width: "100%" }} onSelect={this.subjectChange}  >
-              {
-                examsubjectArr && examsubjectArr.map((item: any, index: any) => {
-                  return <Option value={item.subject_id} key={item.subject_text}>{item.subject_text}</Option>
-                })
-              }
-            </Select>
+            <Form>
+              <Form.Item label="班级名" hasFeedback>
+                {getFieldDecorator("grade", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your grade!"
+                    }
+                  ]
+                })(
+                  <Input
+                    placeholder="班级名"
+                    disabled={disabled}
+                    value={bjVal}
+                    onChange={e => {
+                      this.setState({ bjVal: e.target.value });
+                    }}
+                  />
+                )}
+              </Form.Item>
+
+              <Form.Item label="教室号" hasFeedback>
+                {getFieldDecorator("subject", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your subject!"
+                    }
+                  ]
+                })(
+                  <Select
+                    placeholder="请选择教室号"
+                    defaultValue={roomtext}
+                    defaultActiveFirstOption={false}
+                    style={{ width: "100%" }}
+                    onSelect={this.gradeChange}
+                  >
+                    {subjectAll &&
+                      subjectAll.map((item: any, index: any) => {
+                        return (
+                          <Option value={item.room_id} key={item.room_text}>
+                            {item.room_text}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
+              </Form.Item>
+
+              <Form.Item label="课程名" hasFeedback>
+                {getFieldDecorator("examsubject", {
+                  validateTrigger: "onBlur",
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your examsubject!"
+                    }
+                  ]
+                })(
+                  <Select
+                    placeholder="课程名"
+                    defaultValue={subjecttext}
+                    defaultActiveFirstOption={false}
+                    style={{ width: "100%" }}
+                    onSelect={this.subjectChange}
+                  >
+                    {examsubjectArr &&
+                      examsubjectArr.map((item: any, index: any) => {
+                        return (
+                          <Option
+                            value={item.subject_id}
+                            key={item.subject_text}
+                          >
+                            {item.subject_text}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                )}
+              </Form.Item>
+            </Form>
           </Modal>
           <Table dataSource={data} pagination={false}>
             <Column title="班级名" dataIndex="grade_name" key="grade_name" />
@@ -214,4 +286,4 @@ class ClassMangement extends React.Component<Props> {
   }
 }
 
-export default ClassMangement;
+export default Form.create()(ClassMangement);

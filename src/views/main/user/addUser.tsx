@@ -1,4 +1,3 @@
-
 import { inject, observer } from "mobx-react"
 import {injectIntl} from "react-intl"
 import * as React from "react";
