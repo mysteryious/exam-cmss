@@ -12,14 +12,13 @@ import {
   InputNumber,
   DatePicker,
 } from "antd";
-import { FormComponentProps } from "antd/lib/form/Form";
 const { MonthPicker, RangePicker } = DatePicker;
 const { Option } = Select;
 const { Column, ColumnGroup } = Table;
 import { observer, inject } from "mobx-react";
 import "@/styles/classExam/addExam.css";
 
-interface Props extends FormComponentProps {
+interface Props {
   grade: any;
   subject_id: any;
   exam: any;
@@ -69,7 +68,6 @@ class AddExam extends React.Component<Props> {
 
   public render() {
     let { examsubjectArr, examType, inputNumber } = this.state;
-    const { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
@@ -82,25 +80,7 @@ class AddExam extends React.Component<Props> {
         >
           <div className="iptbox">
             <p>试卷名称:</p>
-            <Form>
-              <Form.Item>
-              {getFieldDecorator("exam", {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  validator: (ruler, value, callback) => {
-                    if (/[^-~]{3,20}/.test(value)) {
-                      callback()
-                    } else {
-                      callback('Please input your exam!')
-                    }
-                  }
-                }]
-              })(
-                <Input style={{ width: 400, height: 30 }}></Input>
-              )}  
-              </Form.Item>
-            </Form>
-            
+            <Input style={{ width: 400, height: 30 }}></Input>
           </div>
           <div className="iptbox">
             <p>选择考试类型:</p>
@@ -123,7 +103,7 @@ class AddExam extends React.Component<Props> {
                   return (
                     <Option value={item.subject_id} key={item.subject_id}>
                       {item.subject_text}
-                    </Option>  
+                    </Option>
                   );
                 })}
             </Select>
@@ -203,4 +183,4 @@ function disabledDateTime() {
 }
 
 
-export default Form.create()(AddExam);
+export default AddExam;
