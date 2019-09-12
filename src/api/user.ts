@@ -9,7 +9,7 @@ export let userLogin = (data: object) => {
 // 获取用户信息
 export let getUserInfo = () => {
     return request.get(port.userInfo);
-}
+}  
 // 获取用户权限
 export let getViewAuthority = () => {
     return request.get(port.getViewAuthority);

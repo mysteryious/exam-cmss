@@ -75,7 +75,7 @@ export let deletemangerstudent = (params: object) => {
 
 
 //添加教室号接口
-export let addmangerroom = (params: object) => {
+export let addmangerroom = (params: object) => {  
   return request.post(port.addmangerroom, params);
 }
 //删除教室号接口

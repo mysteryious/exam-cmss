@@ -23,7 +23,7 @@ interface Props extends FormComponentProps {
 
 @inject("grade", "room")
 @observer
-class ClassMangement extends React.Component<Props,any> {
+class ClassMangement extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props);
   }
@@ -83,28 +83,38 @@ class ClassMangement extends React.Component<Props,any> {
   handleOks = async (e: any) => {
     let { gradeVal, subjectVal, bjVal, gradeid, disabled } = this.state;
     if (disabled) {
-      const gradeupdate = await this.props.grade.mangergradeupdate({ grade_id: gradeid, grade_name: bjVal, room_id: gradeVal, subject_id: subjectVal });
-      console.log(gradeupdate, "----------------")
+      const gradeupdate = await this.props.grade.mangergradeupdate({
+        grade_id: gradeid,
+        grade_name: bjVal,
+        room_id: gradeVal,
+        subject_id: subjectVal
+      });
+      console.log(gradeupdate, "----------------");
     } else {
-      const subject = await this.props.grade.addmangergrade({ grade_name: bjVal, room_id: gradeVal, subject_id: subjectVal });
+      const subject = await this.props.grade.addmangergrade({
+        grade_name: bjVal,
+        room_id: gradeVal,
+        subject_id: subjectVal
+      });
     }
     this.getList();
     Modal.destroyAll();
     this.setState({
       visible: false,
-      bjVal: '',
+      bjVal: "",
       open: true,
-      roomtext: '请选择教室号',
-      subjecttext: '课程名',
+      roomtext: "请选择教室号",
+      subjecttext: "课程名"
     });
   };
   //点击删除按钮
   deletegrade = async (text: any) => {
-    const deleteres = await this.props.grade.deletemangergrade({ grade_id: text.grade_id });
-    console.log(deleteres)
-    this.getList()
-  }
-
+    const deleteres = await this.props.grade.deletemangergrade({
+      grade_id: text.grade_id
+    });
+    console.log(deleteres);
+    this.getList();
+  };
 
   //点击修改按钮
   amend = async (text: any) => {
@@ -173,89 +183,58 @@ class ClassMangement extends React.Component<Props,any> {
             okText={"确定"}
             destroyOnClose={true}
           >
-            <Form>
-              <Form.Item label="班级名" hasFeedback>
-                {getFieldDecorator("grade", {
-                  validateTrigger: "onBlur",
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please input your grade!"
-                    }
-                  ]
-                })(
-                  <Input
-                    placeholder="班级名"
-                    disabled={disabled}
-                    value={bjVal}
-                    onChange={e => {
-                      this.setState({ bjVal: e.target.value });
-                    }}
-                  />
-                )}
-              </Form.Item>
+            <div className="iptbox">
+              <p><span className="active">*</span>班级名:</p>
+              <Input
+                placeholder="班级名"
+                disabled={disabled}
+                value={bjVal}
+                onChange={e => {
+                  this.setState({ bjVal: e.target.value });
+                }}
+              />
+            </div>
 
-              <Form.Item label="教室号" hasFeedback>
-                {getFieldDecorator("subject", {
-                  validateTrigger: "onBlur",
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please input your subject!"
-                    }
-                  ]
-                })(
-                  <Select
-                    placeholder="请选择教室号"
-                    defaultValue={roomtext}
-                    defaultActiveFirstOption={false}
-                    style={{ width: "100%" }}
-                    onSelect={this.gradeChange}
-                  >
-                    {subjectAll &&
-                      subjectAll.map((item: any, index: any) => {
-                        return (
-                          <Option value={item.room_id} key={item.room_text}>
-                            {item.room_text}
-                          </Option>
-                        );
-                      })}
-                  </Select>
-                )}
-              </Form.Item>
+            <div className="iptbox">
+              
+              <p><span className="active">*</span>请选择教室号:</p>
+              <Select
+                placeholder="请选择教室号"
+                defaultValue={roomtext}
+                defaultActiveFirstOption={false}
+                style={{ width: "100%" }}
+                onSelect={this.gradeChange}
+              >
+                {subjectAll &&
+                  subjectAll.map((item: any, index: any) => {
+                    return (
+                      <Option value={item.room_id} key={item.room_text}>
+                        {item.room_text}
+                      </Option>
+                    );
+                  })}
+              </Select>
+            </div>
 
-              <Form.Item label="课程名" hasFeedback>
-                {getFieldDecorator("examsubject", {
-                  validateTrigger: "onBlur",
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please input your examsubject!"
-                    }
-                  ]
-                })(
-                  <Select
-                    placeholder="课程名"
-                    defaultValue={subjecttext}
-                    defaultActiveFirstOption={false}
-                    style={{ width: "100%" }}
-                    onSelect={this.subjectChange}
-                  >
-                    {examsubjectArr &&
-                      examsubjectArr.map((item: any, index: any) => {
-                        return (
-                          <Option
-                            value={item.subject_id}
-                            key={item.subject_text}
-                          >
-                            {item.subject_text}
-                          </Option>
-                        );
-                      })}
-                  </Select>
-                )}
-              </Form.Item>
-            </Form>
+            <div className="iptbox">
+              <p><span className="active">*</span>课程名:</p>
+              <Select
+                placeholder="课程名"
+                defaultValue={subjecttext}
+                defaultActiveFirstOption={false}
+                style={{ width: "100%" }}
+                onSelect={this.subjectChange}
+              >
+                {examsubjectArr &&
+                  examsubjectArr.map((item: any, index: any) => {
+                    return (
+                      <Option value={item.subject_id} key={item.subject_text}>
+                        {item.subject_text}
+                      </Option>
+                    );
+                  })}
+              </Select>
+            </div>
           </Modal>
           <Table dataSource={data} pagination={false}>
             <Column title="班级名" dataIndex="grade_name" key="grade_name" />

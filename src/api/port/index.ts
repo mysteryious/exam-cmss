@@ -41,7 +41,7 @@ export const getmangerstudentnew = '/manger/student/new'
 //获取所有的课程
 export const getexamsubject = '/exam/subject'
 
-//获取所有已经分班的学生的接口
+//获取所有已经分班的学生的接口  
 export const getmangerstudent = '/manger/student'
 
 //删除学生接口
