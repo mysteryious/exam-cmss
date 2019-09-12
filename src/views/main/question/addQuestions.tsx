@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react"
 import { Layout, Input, Button, Form, Select, Modal, message } from 'antd'
 import { FormComponentProps } from "antd/lib/form/Form";
 import { getocaltion, removeltion } from "@/utils/login"
-import {injectIntl} from "react-intl"
+import { injectIntl } from "react-intl"
 import Editor from 'for-editor'
 import "@/styles/question/addQuestions.css"
 
@@ -21,7 +21,7 @@ interface PropInto {
   value: any,
   addQuestions: any,
   history: any,
-  intl:any
+  intl: any
 }
 
 @inject("watchquestions", "question", "addQuestions")
@@ -165,12 +165,12 @@ class addQuestions extends React.Component<PropInto>{
     // * subject_text 课程类型
     // * questions_type_text  题目类型
     // * questions_answer  答案
-    const {formatMessage}=this.props.intl
+    const { formatMessage } = this.props.intl
     const { subject, examType, questionsType, id, title, questions_stem, exam_name, exam_id, subject_text, subject_id, questions_type_text, questions_type_id, questions_answer } = this.state;
     return (
       <div className="question">
         <header>
-          <h2 className="question-title">{formatMessage({id:"menu.question.addQuestions"})}</h2>
+          <h2 className="question-title">{formatMessage({ id: "menu.question.addQuestions" })}</h2>
         </header>
 
         <div className='main' style={{ marginBottom: '20px', background: '#fff' }}>
@@ -193,19 +193,19 @@ class addQuestions extends React.Component<PropInto>{
             <Form.Item>
               <div >
                 <p>请选择考试类型</p>
-                <Select  style={{ width: 120 }} onChange={(value:any)  => this.handleChange(value,"exam_id")}>
+                <Select style={{ width: 120 }} onChange={(value: any) => this.handleChange(value, "exam_id")}>
                   {examType && examType.map((item: any, index: number) => {
                     return <Select.Option value={item.exam_id} key={index}>{item.exam_name}</Select.Option>
                   })}
                 </Select>
                 <p>请选择课程类型</p>
-                <Select  style={{ width: 120 }} onChange={(value:any) => this.handleChange(value, "subject_id")}>
+                <Select style={{ width: 120 }} onChange={(value: any) => this.handleChange(value, "subject_id")}>
                   {subject && subject.map((item: any, index: number) => {
                     return <Select.Option key={index} value={item.subject_id}>{item.subject_text}</Select.Option>
                   })}
                 </Select>
                 <p>请选择题目类型</p>
-                <Select style={{ width: 120 }} onChange={(value:any)  => this.handleChange(value, "questions_type_id")}>
+                <Select style={{ width: 120 }} onChange={(value: any) => this.handleChange(value, "questions_type_id")}>
                   {questionsType && questionsType.map((item: any, index: number) => {
                     return <Select.Option value={item.questions_type_id} key={index}>{item.questions_type_text}</Select.Option>
                   })}

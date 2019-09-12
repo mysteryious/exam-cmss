@@ -1,42 +1,37 @@
 import * as React from "react";
 import * as Moment from 'moment';
-import {
-  Table,
-  Divider,
-  Tag,
-  Button,
-  Modal,
-  Input,
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-} from "antd";
+import { Table, Button, Input, Form, Select, InputNumber, DatePicker ,message} from "antd";
+
+import { observer, inject } from "mobx-react";
+import { FormComponentProps } from "antd/lib/form/Form";
+
+import "@/styles/classExam/addExam.css";
+
 const { MonthPicker, RangePicker } = DatePicker;
 const { Option } = Select;
 const { Column, ColumnGroup } = Table;
-import { observer, inject } from "mobx-react";
-import "@/styles/classExam/addExam.css";
 
-interface Props {
-  grade: any;
-  subject_id: any;
-  exam: any;
-  moment: any
+interface UserFormProps extends FormComponentProps {
+  user: any,
+  grade: any,
+  exam: any,
+  moment: any,
+  subject_id: any,
+  history:any
 }
 
-@inject("room", "grade", "exam")
+
+@inject("grade", "exam")
 @observer
-class AddExam extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
+
+class AddExam extends React.Component<UserFormProps, any> {
 
   public getSubject = async () => {
     //获取所有的课程
     const examsubjectArr = await this.props.grade.getexamsubject();
     //获取所有考试类型
     const examType = await this.props.exam.getexamType();
+
     this.setState({
       examType: examType.data,
       examsubjectArr: examsubjectArr.data
@@ -44,117 +39,146 @@ class AddExam extends React.Component<Props> {
   };
 
 
-  handleNumberChange = (value: any) => {
-    console.log(value);
-    this.setState({
-      number: {
-        inputNumber: value
-      }
-    });
-  };
+
+
+  handleChange = (value: any, name: string) => {
+    this.setState({ [name]: value })
+  }
+
+
   state = {
     examsubjectArr: [],
     examType: [],
-    inputNumber: ""
+    number: 4,//试卷题量
+    subject_id: "",//课程id
+    exam_id: "",//考试类型id
+    title: "",//试题的标题
+    start_time: "",//开始时间
+    end_time: ""
   };
 
   public componentDidMount() {
     this.getSubject();
   }
 
+
+
   public render() {
-    let { examsubjectArr, examType, inputNumber } = this.state;
+    let { examsubjectArr, examType, number } = this.state;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="demo-infinite-container">
         <header>
           <h2 className="logo-title">添加考试</h2>
         </header>
 
-        <div
-          className="main"
-          style={{ marginBottom: "20px", background: "#fff" }}
-        >
-          <div className="iptbox">
-            <p>试卷名称:</p>
-            <Input style={{ width: 400, height: 30 }}></Input>
-          </div>
-          <div className="iptbox">
-            <p>选择考试类型:</p>
-            <Select defaultValue="" style={{ width: 130, height: 30 }}>
-              {examType && examType.map((item: any, index: any) => {
-                return (
-                  <Option value={item.exam_id} key={item.exam_id}>
-                    {item.exam_name}
-                  </Option>
-                );
-              })}
-            </Select>
-          </div>
-          <div className="iptbox">
-            <p>选择课程:</p>
-            <Select defaultValue="" style={{ width: 130, height: 30 }}>
-              {examsubjectArr &&
-                examsubjectArr.map((item: any, index: any) => {
-                  return (
-                    <Option value={item.subject_id} key={item.subject_id}>
-                      {item.subject_text}
-                    </Option>
-                  );
+        <div className="main" style={{ marginBottom: "20px", background: "#fff" }} >
+
+          <Form onSubmit={this.handleSubmit} >
+            <Form.Item label="试卷名称">
+              {getFieldDecorator('title', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your exam title!'
+                  }
+                ]
+              })(<Input style={{ width: 400, height: 30 }} onChange={e => this.handleChange(e.target.value, "title")}></Input>)}
+            </Form.Item>
+
+            <Form.Item label="选择考试类型:">
+              {getFieldDecorator('exam_id', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your exam type!'
+                  }
+                ]
+              })(<Select style={{ width: 120 }} onChange={(value: any) => this.handleChange(value, "exam_id")}>
+                {examType && examType.map((item: any, index: number) => {
+                  return <Select.Option value={item.exam_id} key={index}>{item.exam_name}</Select.Option>
                 })}
-            </Select>
-          </div>
-          <div className="iptbox">
-            <p>设置题量:</p>
-            <InputNumber min={3} max={10} onChange={this.handleNumberChange} />
-          </div>
-          <div className="iptbox">
-            <p>考试时间:</p>
-            <DatePicker
-              placeholder="开始时间"
-              locale={{
-                "lang": {
-                  "now": "此刻",
-                  "ok": "确定",
-                  "timeSelect": "选择时间",
-                }
-              }}
-              showToday={true}
+              </Select>)}
+            </Form.Item>
 
-              format="YYYY-MM-DD HH:mm:ss"
-              disabledDate={disabledDate}
-              disabledTime={disabledDateTime}
-              showTime={{ defaultValue: Moment("00:00:00", "HH:mm:ss") }}
-            />
-            &nbsp;
-            -
-            &nbsp;
+            <Form.Item label="选择课程:">
+              {getFieldDecorator('subject_id', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your subject!'
+                  }
+                ]
+              })(<Select style={{ width: 130, height: 30 }} onChange={(value: any) => this.handleChange(value, "subject_id")}>
+                {examsubjectArr && examsubjectArr.map((item: any, index: any) => {
+                  return <Select.Option value={item.subject_id} key={index}>{item.subject_text}</Select.Option>
+                })}
+              </Select>)}
+            </Form.Item>
 
-            <DatePicker
-              placeholder="结束时间"
-              locale={{
-                "lang": {
-                  "now": "此刻",
-                  "ok": "确定",
-                  "timeSelect": "选择时间",
-                }
-              }}
-              showToday={true}
+            <Form.Item label="设置题量:">
+              {getFieldDecorator('number', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your subject_id!'
+                  }
+                ]
+              })(<InputNumber min={3} max={10} onChange={(value: any) => this.handleChange(value, "number")} />)}
+            </Form.Item>
 
-              format="YYYY-MM-DD HH:mm:ss"
-              disabledDate={disabledDate}
-              disabledTime={disabledDateTime}
-              showTime={{ defaultValue: Moment("00:00:00", "HH:mm:ss") }}
-            />
-          </div>
-          <div className="iptbox">
-            <Button type="primary">
-              创建试卷
+            <div className="time">
+              <Form.Item label="考试时间">
+                {getFieldDecorator('start_time', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择考试时间！',
+                    }
+                  ],
+                })(<DatePicker showTime placeholder="开始时间" />)}
+              </Form.Item>
+              <Form.Item>
+                <span className="span">-</span>
+              </Form.Item>
+              <Form.Item label="考试时间">
+                {getFieldDecorator('end_time', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择考试时间！',
+                    }
+                  ],
+                })(<DatePicker showTime placeholder="结束时间" />)}
+              </Form.Item>
+            </div>
+
+            <div className="iptbox">
+              <Button type="primary" htmlType="submit">
+                创建试卷
             </Button>
-          </div>
+            </div>
+          </Form>
         </div>
       </div>
     );
   }
+  public handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err: any, values: any) => {
+      if (!err) {
+        const { start_time, end_time } = values
+        values.start_time = new Date(start_time._d).getTime()
+        values.end_time = new Date(end_time._d).getTime()
+        const data = await this.props.exam.setexamList(values);
+        if (data.code === 1) {
+          message.success(data.msg, 3, () => {
+            this.props.history.push("/main/examList")
+          })
+        }
+      }
+    });
+  };
 
 }
 function range(start: any, end: any) {
@@ -178,4 +202,4 @@ function disabledDateTime() {
 }
 
 
-export default AddExam;
+export default Form.create()(AddExam);

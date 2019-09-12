@@ -20,7 +20,6 @@ class User {
 
     @action async login(from: LoginFrom): Promise<object> {
         const result: any = await userLogin(from);
-
         //是否记住密码
         if (result.code === 1) {
             if (from.remember) {
@@ -52,15 +51,10 @@ class User {
         return viewAuthority.data
     }
 
-
     // 更新用户信息
     @action async updateUser(params:any): Promise<any> {
-        this.avatar = params.avatar;
-        
-        // let viewAuthority: any = await updateUser(params);
-        // console.log(params)
-        // this.viewAuthority = viewAuthority.data;
-        // return viewAuthority.data
+        let result: any = await updateUser(params);
+        return result
     }
 }
 

@@ -77,12 +77,7 @@ const RouteConfig = [
   },
   {
     component: React.lazy(() => import("@/views/login/index")),
-    path: "/login",
-    view_id: "login"
-  },
-  {
-    path: "/",
-    redirect: "/login"
+    path: "/login"
   },
   {
     component: () => <div>403</div>,
@@ -91,6 +86,10 @@ const RouteConfig = [
   {
     component: () => <div>404</div>,
     path: '/404'
+  },
+  {
+    path: "/",
+    redirect: "/login"
   },
   {
     path: '*',

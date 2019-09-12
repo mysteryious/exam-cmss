@@ -23,22 +23,22 @@ const beforeEach = async (history: any) => {
   }
 }
 
-export const filterView = async (RouteConfig: object[]) => {
+export const filterView = (RouteConfig: object[]) => {
   //后台的路由表
-  let viewAutority = await store.user.getViewAuthority();
+  let viewAutority = store.user.viewAuthority;
   console.log(viewAutority)
   const forbiddenView: object[] = [];
 
   function func(RouteConfig: object[], viewAutority: object[]) {
     const routes: object[] = [];
-    RouteConfig.forEach((item: any) => {
+    RouteConfig.forEach(({...item}:any) => {
       if (item.children) {
         item.children = func(item.children, viewAutority);
       }
 
       if (item.view_id) {
         let itemIndev = viewAutority.findIndex((value: any) => value.view_id === item.view_id);
-        // console.log(item, itemIndev)
+        console.log(itemIndev, item.view_id, viewAutority)
         if (itemIndev != -1) {
           routes.push(item)
         } else {

@@ -17,7 +17,6 @@ interface UserFormProps extends FormComponentProps {
 @observer
 
 class Login extends React.Component<UserFormProps, any> {
-  public state = {};
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { user_name, user_pwd } = this.props.user.account;

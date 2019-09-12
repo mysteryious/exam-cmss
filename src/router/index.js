@@ -1,51 +1,31 @@
-import React, { Suspense, Component } from "react";
-import { BrowserRouter } from 'react-router-dom'
+import * as React from "react";
+import { Router } from "react-router"
 import RouteConfig from "./RouteConfig"
 import RouteView from "./RouteView"
+const history = require("history").createBrowserHistory()
+
+//路由守卫
+import guard, { filterView } from "@/utils/permission"
+import { observer } from 'mobx-react';
 
 
-class RouterIndex extends Component {
+
+guard(history)
+
+
+class RouterIndex extends React.Component {
   render() {
-    return <BrowserRouter>
+    const myRoutes = filterView(RouteConfig);
+
+    return <Router history={history}>
       {/* 页面没有加载出来显示loading... */}
-      <Suspense fallback={<div>loading...</div>}>
-        <RouteView children={RouteConfig} />
-      </Suspense>
-    </BrowserRouter>
+      <React.Suspense fallback={<div>loading...</div>}>
+        <RouteView children={myRoutes} />
+      </React.Suspense>
+    </Router>
   }
 }
 
-export default RouterIndex
 
-
-
-// import React, { Suspense, Component } from "react";
-// import { Router } from "react-router"
-// import RouteConfig from "./RouteConfig"
-// import RouteView from "./RouteView"
-// const history = require("history").createBrowserHistory()
-
-// // //路由守卫
-// // import guard, { filterView } from "@/utils/permission"
-
-// // const myRoutes = filterView(RouteConfig);
-// // console.log('myRoutes...', myRoutes);
-
-
-// // guard(history)
-
-
-// class RouterIndex extends Component {
-//   render() {
-//     <Router history={history}>
-//       {/* 页面没有加载出来显示loading... */}
-//       <Suspense fallback={<div>loading...</div>}>
-//         <RouteView children={RouteConfig} />
-//       </Suspense>
-//     </Router>
-//   }
-// }
-
-
-// export default RouterIndex
+export default observer(RouterIndex)
 

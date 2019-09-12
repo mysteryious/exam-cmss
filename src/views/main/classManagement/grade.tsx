@@ -1,16 +1,13 @@
 import * as React from "react";
-import { Table, Divider, Tag, Button, Modal, Input, Select } from "antd";
+import { Table, Divider, Tag, Form,Button, Modal, Input, Select } from "antd";
 import { observer, inject } from "mobx-react";
+import { FormComponentProps } from "antd/lib/form/Form";
 import { injectIntl } from "react-intl"
 import { array } from 'prop-types';
 import "@/styles/classMangement/grade.css";
 
 const { Option } = Select;
 const { Column, ColumnGroup } = Table;
-
-
-
-
 
 interface Props extends FormComponentProps {
   grade: any;

@@ -12,7 +12,8 @@ const { Content, Header, Sider } = Layout;
 
 interface UserFormProps extends FormComponentProps {
   global: any,
-  user: any
+  user: any,
+  history: any
 }
 
 
@@ -57,7 +58,7 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj, (imageUrl: any) =>
         this.setState({
-          imageUrl,
+          imageUrl: info.file.response.data[0].path,
           loading: false,
         })
       );
@@ -67,7 +68,6 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
   getList = async () => {
     //获取用户信息
     const userInfo = await this.props.user.getUserInfo();
-    // console.log(userInfo.user_name)
     this.setState({ ...userInfo })
   };
 
@@ -78,17 +78,6 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
     });
   };
 
-  //点击提交按钮
-  handleOks = async (e: any) => {
-    const { imageUrl, user_id } = this.state
-    this.setState({
-      visible: false,
-    });
-    this.props.user.updateUser({
-      user_id:user_id,
-      avatar: imageUrl
-    })
-  };
   state = {
     visible: false,
     loading: false,
@@ -144,13 +133,13 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
         <Modal
           title="完善个人信息"
           visible={this.state.visible}
-          onOk={this.handleOks}
+          onOk={this.handleSubmit}
           onCancel={this.handleCancel}
           cancelText="取消"
           okText="保存"
         >
 
-          <Form {...formItemLayout}>
+          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="用户头像">
               <Upload
                 name="avatar"
@@ -211,6 +200,26 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
       </Header>
     );
   }
+  public handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err: any, values: any) => {
+      if (!err) {
+        const { imageUrl, user_id } = this.state
+        const data = await this.props.user.updateUser({
+          ...values,
+          avatar: imageUrl
+        })
+
+        if (data.code === 1) {
+          message.success(data.msg, 3, () => {
+            this.setState({
+              visible: false
+            });
+          })
+        }
+      }
+    });
+  };
 }
 
 export default Form.create()(HeaderComponent);

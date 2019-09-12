@@ -104,9 +104,13 @@ export let getmangerstudent = () => {
   return request.get(port.getmangerstudent);
 }
 
-////获取试卷列表
+//获取试卷列表
 export let getexamList = ()=>{
   return request.get(port.getexamList);
 }
 
 
+//创建试卷
+export let setexamList = (params:any)=>{
+  return request.post(port.getexamList,params);
+}
