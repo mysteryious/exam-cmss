@@ -108,7 +108,7 @@ class Login extends React.Component<UserFormProps, any> {
             this.props.history.push("/main")
           })
         }
-      }
+      }  
     });
   };
 }

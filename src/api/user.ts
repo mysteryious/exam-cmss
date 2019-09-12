@@ -4,12 +4,13 @@ import request from "../utils/request"
 
 //用户登录
 export let userLogin = (params: object) => {
-    return request.post(port.Userlogin, params)
+    console.log(params)
+    return request.post(port.Userlogin, params)  
 }
 // 获取用户信息
 export let getUserInfo = () => {
     return request.get(port.userInfo);
-}
+}  
 // 获取用户权限
 export let getViewAuthority = ()=>{
     return request.get(port.getViewAuthority);

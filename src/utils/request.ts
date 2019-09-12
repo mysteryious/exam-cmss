@@ -6,7 +6,7 @@ const request = axios.create({
   timeout: 1000,
   headers: {
     'authorization': getToken(),
-    'Content-Type': 'application/x-www-form-urlencoded'
+    // 'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
 
