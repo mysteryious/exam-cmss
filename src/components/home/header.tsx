@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dropdown, Icon, Layout, Menu, Select, Avatar, Modal, Upload, message, Form, Input, Tooltip, Cascader, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import { inject, observer } from "mobx-react"
 import { FormComponentProps } from "antd/lib/form/Form";
+import { getUserInfo } from '@/api/user';
 
 
 const { SubMenu } = Menu;

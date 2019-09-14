@@ -70,6 +70,11 @@ const RouteConfig = [
         view_id: "main-examPaperClassmate"
       },
       {
+        component: React.lazy(() => import("@/views/main/vip/vipCorrect")),
+        path: "/main/vipCorrect/:grade_id",
+        // view_id: "main-examPaperClassmate"
+      },
+      {
         path: "/main",
         redirect: "/main/questionsType"
       }

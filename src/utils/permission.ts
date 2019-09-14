@@ -50,7 +50,7 @@ export const filterView = (RouteConfig: object[]) => {
     return routes
   }
   let routes = func(RouteConfig, viewAutority);
-  console.log('routes...', routes, 'forbiddenView...', forbiddenView);
+  // console.log('routes...', routes, 'forbiddenView...', forbiddenView);
   return forbiddenView.concat(routes);
 }
 
