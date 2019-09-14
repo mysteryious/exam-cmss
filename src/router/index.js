@@ -20,7 +20,7 @@ class RouterIndex extends React.Component {
     return <Router history={history}>
       {/* 页面没有加载出来显示loading... */}
       <React.Suspense fallback={<div>loading...</div>}>
-        <RouteView children={myRoutes} />
+        <RouteView children={RouteConfig} />
       </React.Suspense>
     </Router>
   }

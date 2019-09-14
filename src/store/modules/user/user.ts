@@ -1,5 +1,5 @@
 import { observable, action } from "mobx"
-import { userLogin, getUserInfo, getViewAuthority,updateUser } from "@/api/user"
+import { userLogin, getUserInfo, getViewAuthority, updateUser } from "@/api/user"
 import { getocaltion, setocaltion, removeltion } from "@/utils/login"
 import { setToken } from "@/utils/cookie"
 
@@ -52,7 +52,7 @@ class User {
     }
 
     // 更新用户信息
-    @action async updateUser(params:any): Promise<any> {
+    @action async updateUser(params: any): Promise<any> {
         let result: any = await updateUser(params);
         return result
     }

@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+  list-style: none;
+}
+
+.detailBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.detailBox .left {
+  width: 50%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 24px;
+}
+
+.detailBox .left .message {
+  display: flex;
+  margin: 20px 0;
+}
+
+.detailBox .left .message div {
+  margin-right: 10px;
+  padding: 0 7px;
+  height: 22px;
+  font-size: 12px;
+}
+
+.detailBox .left .message div:nth-of-type(1) {
+  color: #1890ff;
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.detailBox .left .message div:nth-of-type(2) {
+  color: #2f54eb;
+  background: #f0f5ff;
+  border-color: #adc6ff;
+}
+
+.detailBox .left .message div:nth-of-type(3) {
+  color: #fa8c16;
+  background: #fff7e6;
+  border-color: #ffd591;
+}
+
+.detailBox .left .react-markdown {
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.detailBox .left-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.detailBox .right {
+  width: 45%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.detailBox .right-list {
+  width: 45%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 24px;
+}

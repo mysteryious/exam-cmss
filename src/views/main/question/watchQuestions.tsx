@@ -2,14 +2,14 @@ import * as React from "react"
 import { List, message, Spin, Select, Button, Layout, Tag } from 'antd'
 const { CheckableTag } = Tag;
 import { inject, observer } from "mobx-react"
-import {injectIntl} from "react-intl"
+import { injectIntl } from "react-intl"
 import "@/styles/question/watchquestion.css"
 
 interface PropInto {
   watchquestions: any,
   history: any,
   question: any,
-  intl:any
+  intl: any
 }
 
 @inject("watchquestions", "question")
@@ -57,6 +57,8 @@ class watchQuestions extends React.Component<PropInto>{
     this.setState({ [name]: value })
   }
 
+
+
   handleSublit = async () => {
     const { questions_type_id, subject_id, exam_id } = this.state
     let array = []
@@ -84,11 +86,11 @@ class watchQuestions extends React.Component<PropInto>{
 
   public render() {
     const { subject, examType, questionsType, getQuestions, subject_id } = this.state
-    const {formatMessage}=this.props.intl
+    const { formatMessage } = this.props.intl
     return (
       <div className="demo-infinite-container">
         <header>
-          <h2 className="logo-title">{formatMessage({id:"menu.question.watchQuestions"})}</h2>
+          <h2 className="logo-title">{formatMessage({ id: "menu.question.watchQuestions" })}</h2>
         </header>
 
         <div className="top">
@@ -138,7 +140,7 @@ class watchQuestions extends React.Component<PropInto>{
                 dataSource={getQuestions}
                 renderItem={(item: any) => (
                   <List.Item>
-                    <div className="ant-list-item-content" onClick={() => this.props.history.push(`/main/question/detail/${item.questions_id}`)}>
+                    <div className="ant-list-item-content" onClick={()=>this.props.history.push({ pathname: `/main/question/detail/${item.questions_id}`, state: { title: '试题详情' } })}>
                       <List.Item.Meta title={item.title} />
                       <span>{item.questions_type_text}</span>
                       <span>{item.subject_text}</span>

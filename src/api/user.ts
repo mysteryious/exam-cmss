@@ -16,7 +16,6 @@ export let getViewAuthority = () => {
 }
 // 更新用户信息
 export let updateUser = (params: object) => {
-    console.log(params)
     return request.put(port.updateUser, params);
 }
 

@@ -26,7 +26,6 @@ const beforeEach = async (history: any) => {
 export const filterView = (RouteConfig: object[]) => {
   //后台的路由表
   let viewAutority = store.user.viewAuthority;
-  console.log(viewAutority)
   const forbiddenView: object[] = [];
 
   function func(RouteConfig: object[], viewAutority: object[]) {
@@ -38,7 +37,6 @@ export const filterView = (RouteConfig: object[]) => {
 
       if (item.view_id) {
         let itemIndev = viewAutority.findIndex((value: any) => value.view_id === item.view_id);
-        console.log(itemIndev, item.view_id, viewAutority)
         if (itemIndev != -1) {
           routes.push(item)
         } else {
@@ -46,7 +44,6 @@ export const filterView = (RouteConfig: object[]) => {
           forbiddenView.push({ path: item.path, redirect: '/404' });
         }
       } else {
-        console.log(item)
         routes.push(item)
       }
     })

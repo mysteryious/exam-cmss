@@ -34,3 +34,9 @@
 .iptbox{
     margin-top: 20px;
 }
+.time{
+  display: flex;
+}
+.span{
+  padding: 0 10px;
+}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Moment from 'moment';
-import { Table, Button, Input, Form, Select, InputNumber, DatePicker ,message} from "antd";
+import { Table, Button, Input, Form, Select, InputNumber, DatePicker, message } from "antd";
 
 import { observer, inject } from "mobx-react";
 import { FormComponentProps } from "antd/lib/form/Form";
@@ -17,7 +17,7 @@ interface UserFormProps extends FormComponentProps {
   exam: any,
   moment: any,
   subject_id: any,
-  history:any
+  history: any
 }
 
 
@@ -137,11 +137,7 @@ class AddExam extends React.Component<UserFormProps, any> {
                     }
                   ],
                 })(<DatePicker showTime placeholder="开始时间" />)}
-              </Form.Item>
-              <Form.Item>
-                <span className="span">-</span>
-              </Form.Item>
-              <Form.Item label="考试时间">
+                  <span className="span">-</span>
                 {getFieldDecorator('end_time', {
                   rules: [
                     {

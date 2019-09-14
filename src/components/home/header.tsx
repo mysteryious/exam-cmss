@@ -212,6 +212,7 @@ class HeaderComponent extends React.Component<UserFormProps, any>{
 
         if (data.code === 1) {
           message.success(data.msg, 3, () => {
+            this.props.user.getUserInfo();
             this.setState({
               visible: false
             });
