@@ -13,6 +13,7 @@ interface Props {
   grade_name:any;
   subject_id:any;
   room:any;
+  history:any
 }
 
 @inject("grade",'room')
@@ -28,36 +29,22 @@ class ClassMangement extends React.Component<Props> {
     //获取已经分配教室的班级
     const subject = await this.props.grade.getmangergrade();
     subject.data.map((item:any,index:number)=>item.key=index)
-    // console.log(subject)
     this.setState({ data: subject.data });
   };
 
-  // public getsubjectAll = async () => {
-  //   //获取全部教室
-  //   const subject = await this.props.room.getmangerroom();
-  //   // console.log(subject)
-  //   this.setState({ subjectAll: subject.data });
-  // };
 
-  // public getSubject = async () => {
-  //   //获取所有的课程
-  //   const subject = await this.props.grade.getexamsubject();
-  //   // console.log(subject)
-  //   this.setState({ examsubjectArr: subject.data });
-  // };
-
+  public correct(text:any){
+    this.props.history.push({pathname:'/main/vipCorrect',query:{id:text.grade_id}})
+  }
 
   public componentDidMount() {
     this.getList();
-    // this.getSubject();
-    // this.getsubjectAll()
   }
   state = {
     data: [],
   };
   public render() {
     let { data } = this.state;
-    console.log(data)
     
     return (
       <div className="demo-infinite-container">
@@ -88,7 +75,7 @@ class ClassMangement extends React.Component<Props> {
               key="操作"
               render={(text, record: any) => (
                 <span>
-                  <a>批卷</a>
+                  <a onClick={this.correct.bind(this,text)}>批卷</a>
                 </span>
               )}
             />
@@ -96,7 +83,10 @@ class ClassMangement extends React.Component<Props> {
         </div>
       </div>
     );
+    
   }
+  
 }
+
 
 export default ClassMangement;
