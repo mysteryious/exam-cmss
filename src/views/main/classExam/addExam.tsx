@@ -137,7 +137,7 @@ class AddExam extends React.Component<UserFormProps, any> {
                     }
                   ],
                 })(<DatePicker showTime placeholder="开始时间" />)}
-                  <span className="span">-</span>
+                <span className="span">-</span>
                 {getFieldDecorator('end_time', {
                   rules: [
                     {
@@ -152,7 +152,7 @@ class AddExam extends React.Component<UserFormProps, any> {
             <div className="iptbox">
               <Button type="primary" htmlType="submit">
                 创建试卷
-            </Button>
+              </Button>
             </div>
           </Form>
         </div>
@@ -168,9 +168,7 @@ class AddExam extends React.Component<UserFormProps, any> {
         values.end_time = new Date(end_time._d).getTime()
         const data = await this.props.exam.setexamList(values);
         if (data.code === 1) {
-          message.success(data.msg, 3, () => {
-            this.props.history.push("/main/examList")
-          })
+          this.props.history.push({ pathname: "/main/editexam", state: { title: "创建试题", exam: data } })
         }
       }
     });

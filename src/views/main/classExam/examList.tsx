@@ -149,7 +149,7 @@ class ExamList extends React.Component<Props> {
             </span>
           </div>
           <div className="dataTable">
-            <Table columns={columns} dataSource={examList} pagination={false} />
+            <Table columns={columns} dataSource={examList} />
           </div>
         </div>
       </div>

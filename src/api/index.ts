@@ -112,8 +112,10 @@ export let getexamList = ()=>{
 export let examDetail=(params:any)=>{
   return request.get(`/exam/exam/${params}`);
 }
-
 //创建试卷
 export let setexamList = (params:any)=>{
   return request.post(port.getexamList,params);
+}
+export let SETexamList = (params:any)=>{
+  return request.put(`/exam/exam/${params.id}`,params);
 }

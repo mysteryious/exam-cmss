@@ -58,6 +58,11 @@
   padding: 20px;
   margin-bottom: 20px;
 }
+.detailBox .left-item img {
+  max-width: 100%;
+  display: block;
+}
+
 
 .detailBox .right {
   width: 45%;

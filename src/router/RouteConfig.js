@@ -54,10 +54,15 @@ const RouteConfig = [
         path: "/main/student",
         view_id: "main-student"
       },
+      
       {//添加考试
         component: React.lazy(() => import("@/views/main/classExam/addExam")),
         path: "/main/addExam",
         view_id: "main-examEdit"
+      },
+       {//添加考试试题
+        component: React.lazy(() => import("@/views/main/classExam/editexam")),
+        path: "/main/editexam",
       },
       {//试卷列表
         component: React.lazy(() => import("@/views/main/classExam/examList")),
@@ -69,6 +74,7 @@ const RouteConfig = [
         path: "/main/vip",
         view_id: "main-examPaperClassmate"
       },
+
       {
         component: React.lazy(() => import("@/views/main/vip/vipCorrect")),
         path: "/main/vipCorrect/:grade_id",

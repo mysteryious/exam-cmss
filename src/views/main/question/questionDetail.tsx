@@ -35,6 +35,7 @@ class questionsType extends React.Component<PropInto>{
       });
     } else {
       result = await this.props.examlist.examDetail(this.props.match.params.id);
+      console.log(this.props.match.params.id,result)
     }
     this.setState({
       dataSource: result.data
@@ -49,7 +50,6 @@ class questionsType extends React.Component<PropInto>{
 
   public render() {
     const { dataSource }: any = this.state
-    console.log(Array.isArray(dataSource))
     return (
       <div style={{ marginBottom: '20px' }}>
         <h2>{this.props.location.state.title}</h2>

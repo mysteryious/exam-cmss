@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  list-style: none;
+}
+
+.edit-main {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 40px;
+}
+.edit-content {
+  margin: auto;
+  text-align: center;
+  position: relative;
+}
+
+.edit-main .react-markdown {
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.edit-main .content-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.react-markdown img {
+  max-width: 100%;
+  display: block;
+}
