@@ -2,7 +2,7 @@ import * as React from "react";
 import { Router } from "react-router"
 import RouteConfig from "./RouteConfig"
 import RouteView from "./RouteView"
-const history = require("history").createBrowserHistory()
+const history = require("history").createHashHistory()
 
 //路由守卫
 import guard, { filterView } from "@/utils/permission"

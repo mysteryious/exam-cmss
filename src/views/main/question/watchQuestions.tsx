@@ -140,7 +140,7 @@ class watchQuestions extends React.Component<PropInto>{
                 dataSource={getQuestions}
                 renderItem={(item: any) => (
                   <List.Item>
-                    <div className="ant-list-item-content" onClick={()=>this.props.history.push({ pathname: `/main/question/detail/${item.questions_id}`, state: { title: '试题详情' } })}>
+                    <div className="ant-list-item-content" onClick={() => this.props.history.push({ pathname: `/main/question/detail/${item.questions_id}`, state: { title: '试题详情' } })}>
                       <List.Item.Meta title={item.title} />
                       <span>{item.questions_type_text}</span>
                       <span>{item.subject_text}</span>

@@ -31,7 +31,6 @@ class questionsType extends React.Component<PropInto>{
   public getList = async () => {
     //获取试题分类的数据
     let result = this.props.location.state.exam;
-    console.log(result)
     this.setState({
       dataSource: result.data
     })
@@ -45,7 +44,6 @@ class questionsType extends React.Component<PropInto>{
 
   public render() {
     const { dataSource }: any = this.state
-    console.log(dataSource)
     return (
       <div style={{ marginBottom: '20px' }}>
         <h2>{this.props.location.state.title}</h2>
