@@ -1,9 +1,18 @@
 import * as React from "react";
-import { Table, Divider, Tag, Button, Pagination, Form, Input, Select } from "antd";
+import {
+  Table,
+  Divider,
+  Tag,
+  Button,
+  Pagination,
+  Form,
+  Input,
+  Select
+} from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 import { observer, inject } from "mobx-react";
-import { injectIntl } from "react-intl"
-// import XLSX from 'xlsx'
+import { injectIntl } from "react-intl";
+import * as XLSX from "xlsx";
 import "@/styles/classMangement/student.css";
 
 const { Column, ColumnGroup } = Table;
@@ -48,22 +57,22 @@ class ClassMangement extends React.Component<Props> {
     mangerstudentAll: [],
     subjectAll: [],
     mangergradeAll: [],
-    student_name: '',
-    room_text: '',
-    grade_name: ''
+    student_name: "",
+    room_text: "",
+    grade_name: ""
   };
   //获取ipt的值
   handleNumberChange = (e: any) => {
     // console.log(e.target.value);
-    this.setState({ student_name: e.target.value })
+    this.setState({ student_name: e.target.value });
   };
   //教室号的下拉菜单
   roomChange = (e: any) => {
-    this.setState({ room_text: e })
+    this.setState({ room_text: e });
   };
   //班级号的下拉菜单
   gradeChange = (e: any) => {
-    this.setState({ grade_name: e })
+    this.setState({ grade_name: e });
   };
   //点击搜索按钮
   handleSubmit = async () => {
@@ -91,23 +100,57 @@ class ClassMangement extends React.Component<Props> {
       } else {
         return mangerstudentAll
       }
-    })
+    });
     // console.log(filterArr)
-    this.setState({ mangerstudentAll: filterArr })
-
+    this.setState({ mangerstudentAll: filterArr });
   };
   //点击重置按钮
   reset = () => {
     this.props.form.resetFields();
-    this.setState({ student_name: '', room_text: '', grade_name: '' })
-    this.getList()
+    this.setState({ student_name: "", room_text: "", grade_name: "" });
+    this.getList();
   };
   //点击删除按钮
   deleteTabble = async (text: any) => {
-    const subject = await this.props.student.deletemangerstudent({ id: text.student_id });
+    const subject = await this.props.student.deletemangerstudent({
+      id: text.student_id
+    });
     // console.log(subject)
     this.getList();
-  }
+  };
+
+  //点击导出按钮
+  exportExcel = () => {
+    // 1.把table里面的数据生成worksheet
+    let wroksheet = XLSX.utils.json_to_sheet(this.state.mangerstudentAll);
+
+    // 2.把worksheet放到workbook里
+    let workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, wroksheet);
+    XLSX.utils.book_append_sheet(workbook, wroksheet);
+    XLSX.utils.book_append_sheet(workbook, wroksheet);
+    XLSX.utils.book_append_sheet(workbook, wroksheet);
+    XLSX.utils.book_append_sheet(workbook, wroksheet);
+
+    XLSX.writeFile(workbook, "学生名单.xlsx");
+  };
+
+  uploadExcel = (e: any) => {
+    console.log("e...", e.target, e.target.files);
+    let reader = new FileReader();
+    reader.onload = function(e: any) {
+      var data = new Uint8Array(e.target.result);
+      var workbook = XLSX.read(data, { type: "array" });
+      console.log("workbook...", workbook);
+
+      var ws = XLSX.utils.sheet_to_json(
+        workbook.Sheets[workbook.SheetNames[0]]
+      );
+      console.log("data...", ws);
+    };
+
+    reader.readAsArrayBuffer(e.target.files[0]);
+  };
 
   // exportExcel = () => {
   //   // 1.把table里面的数据生成worksheet
@@ -229,6 +272,16 @@ class ClassMangement extends React.Component<Props> {
             {/* <input type="file" accept=".xlsx" onChange={this.uploadExcel} />
             <Button onClick={this.exportExcel}>导出数据</Button> */}
           </Form>
+          <Button
+            type="primary"
+            onClick={this.exportExcel}
+            style={{ marginLeft: "10px" }}
+          >
+            导出学生名单
+          </Button>
+          <Button type="primary" style={{ marginLeft: "10px" }}>
+            <input type="file" accept=".xlsx" onChange={this.uploadExcel} />
+          </Button>
         </div>
         <div
           className="main"
