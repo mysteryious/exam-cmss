@@ -34,11 +34,11 @@ class ClassMangement extends React.Component<Props> {
 
 
   public correct(text:any){
-    this.props.history.push({pathname:'/main/vipCorrect',query:{id:text.grade_id}})
+    this.props.history.push({pathname:'/main/vipCorrect',query:{id:text.grade_id,grade_name:text.grade_name}})
   }
 
   public componentDidMount() {
-    this.getList();
+    this.getList();  
   }
   state = {
     data: [],

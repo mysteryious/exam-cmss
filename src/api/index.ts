@@ -57,7 +57,7 @@ export let getmangerroom = () => {
   return request.get(port.getmangerroom);
 }
 //获取没有分配教室的班级
-export let getmangerstudentnew = () => {
+export let getmangerstudentnew = () => {  
   return request.get(port.getmangerstudentnew);
 }
 //获取所有的课程
@@ -118,4 +118,9 @@ export let setexamList = (params:any)=>{
 }
 export let SETexamList = (params:any)=>{
   return request.put(`/exam/exam/${params.id}`,params);
+}
+
+//获取学生试卷列表
+export let getexamStudent = (params:any)=>{
+  return request.get(port.getexamStudent,{params});
 }
