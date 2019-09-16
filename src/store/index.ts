@@ -11,19 +11,21 @@ import Room from './modules/classManagement/room'
 import Student from './modules/classManagement/student'
 import Exam from './modules/classExam/addExam'
 import ExamList from './modules/classExam/examList'
+import VipCorrect from './modules/vip/vipCorrect'
 
 const user=new User()
 const global=new Global()
 const question=new Question()
 const watchquestions=new Watchquestions()
 const addQuestions=new AddQuestions()
-
+  
 const showuser=new Showuser()
 const grade = new Grade()
 const room = new Room() 
 const student = new Student()
 const exam = new Exam()
 const examlist = new ExamList()
+const vipCorrect = new VipCorrect()
 
 export default {
   user,
@@ -36,6 +38,7 @@ export default {
   room,
   student,  
   exam,
-  examlist
+  examlist,
+  vipCorrect
 }
   
