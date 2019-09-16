@@ -107,7 +107,6 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
-      '@':path.join(__diraname,"../src")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -380,16 +379,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
-  module: {
-    rules: [
-     {
-       test: /\.(ts|tsx)$/,
-       exclude: /node_modules/,
-       loader: "awesome-typescript-loader",
-     }
-    ]
-  },
-  resolve: {
-    extensions: [".tsx", ".ts", ".js",".jsx"]
-  }
 };

@@ -1,12 +1,16 @@
 import axios from "axios"
 import { getToken } from './cookie';
+const Url = {
+  '123.206.55.50': "//exam.jasonandjay.com",
+  '127.0.0.1': '//169.254.155.234:7001',
+  'jasonandjay.com':"//exam.jasonandjay.com"
+}
 
 const request = axios.create({
-  baseURL: 'http://127.0.0.1:7001',
+  baseURL: Url[window.location.host],
   timeout: 1000,
   headers: {
-    'authorization': getToken(),
-    // 'Content-Type': 'application/x-www-form-urlencoded'
+    'authorization': getToken()
   }
 })
 

@@ -8,7 +8,7 @@ export const updateUser = '/user/user'
 
 // 获取用户权限
 export let getViewAuthority = '/user/view_authority'
-
+  
 
 // 获取试题
 export const getQuestion='/exam/getQuestionsType'
@@ -87,3 +87,10 @@ export const getexamList = '/exam/exam'
 
 //获取用户展示页面数据
 export const getShowUserdata = '/user'
+
+
+//获取学生试卷列表
+export const getexamStudent = '/exam/student'
+
+//获取学生试卷详情
+export const getstudentdetail = '/exam/student'

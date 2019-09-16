@@ -77,8 +77,13 @@ const RouteConfig = [
 
       {
         component: React.lazy(() => import("@/views/main/vip/vipCorrect")),
-        path: "/main/vipCorrect/:grade_id",
-        // view_id: "main-examPaperClassmate"
+        path: "/main/vipCorrect",
+        view_id: "main-examPaperClassmate"
+      },
+      {//获取学生试卷详情
+        component: React.lazy(() => import("@/views/main/vip/detail")),
+        path: "/main/detail",
+        view_id: "main-examPaperClassmate"
       },
       {
         path: "/main",
