@@ -3,6 +3,7 @@ import { Table, Divider, Tag, Button, Pagination, Form, Input, Select } from "an
 import { FormComponentProps } from "antd/lib/form/Form";
 import { observer, inject } from "mobx-react";
 import { injectIntl } from "react-intl"
+// import XLSX from 'xlsx'
 import "@/styles/classMangement/student.css";
 
 const { Column, ColumnGroup } = Table;
@@ -26,30 +27,22 @@ class ClassMangement extends React.Component<Props> {
   public getList = async () => {
     //获取所有已经分班的学生的接口
     const subject = await this.props.student.getmangerstudent();
-    // console.log(subject.data);
     subject.data.map((item: any, index: number) => (item.key = index));
-    this.setState({ mangerstudentAll: subject.data });
+
+    const subjectAll = await this.props.room.getmangerroom();
+    const mangergradeAll = await this.props.grade.getmangergrade();
+    mangergradeAll.data.map((item: any, index: number) => (item.key = index));
+
+    this.setState({
+      mangerstudentAll: subject.data,
+      subjectAll: subjectAll.data,
+      mangergradeAll: subject.data
+    });
   };
 
-  public getsubjectAll = async () => {
-    //获取全部教室
-    const subject = await this.props.room.getmangerroom();
-    // console.log(subject)
-    this.setState({ subjectAll: subject.data });
-  };
-
-  public mangergrade = async () => {
-    //获取已经分配教室的班级
-    const subject = await this.props.grade.getmangergrade();
-    // console.log(subject)
-    subject.data.map((item: any, index: number) => (item.key = index));
-    this.setState({ mangergradeAll: subject.data });
-  };
 
   public componentDidMount() {
     this.getList();
-    this.getsubjectAll();
-    this.mangergrade();
   }
   state = {
     mangerstudentAll: [],
@@ -73,29 +66,29 @@ class ClassMangement extends React.Component<Props> {
     this.setState({ grade_name: e })
   };
   //点击搜索按钮
-  handleSubmit =async () => {
-    let { student_name,room_text,grade_name} = this.state;
-    
+  handleSubmit = async () => {
+    let { student_name, room_text, grade_name } = this.state;
+
     const subject = await this.props.student.getmangerstudent();
     subject.data.map((item: any, index: number) => (item.key = index));
     let mangerstudentAll = subject.data;
-    let filterArr = mangerstudentAll; 
-    filterArr = mangerstudentAll.filter((item:any,index:any)=>{
-      if(student_name&&room_text&&grade_name){
-        return item.grade_name == grade_name&&item.room_text == room_text && item.student_name == student_name
-      }else if(room_text&&grade_name){
-        return item.room_text == room_text &&item.grade_name == grade_name 
-      }else if(student_name&&grade_name){
-        return item.student_name == student_name &&item.grade_name == grade_name 
-      }else if(student_name&&room_text){
-        return item.student_name == student_name &&item.room_text == room_text 
-      }else if(grade_name){
+    let filterArr = mangerstudentAll;
+    filterArr = mangerstudentAll.filter((item: any, index: any) => {
+      if (student_name && room_text && grade_name) {
+        return item.grade_name == grade_name && item.room_text == room_text && item.student_name == student_name
+      } else if (room_text && grade_name) {
+        return item.room_text == room_text && item.grade_name == grade_name
+      } else if (student_name && grade_name) {
+        return item.student_name == student_name && item.grade_name == grade_name
+      } else if (student_name && room_text) {
+        return item.student_name == student_name && item.room_text == room_text
+      } else if (grade_name) {
         return item.grade_name == grade_name
-      }else if(room_text){
+      } else if (room_text) {
         return item.room_text == room_text
-      }else if(student_name){
+      } else if (student_name) {
         return item.student_name == student_name
-      }else{
+      } else {
         return mangerstudentAll
       }
     })
@@ -115,6 +108,38 @@ class ClassMangement extends React.Component<Props> {
     // console.log(subject)
     this.getList();
   }
+
+  // exportExcel = () => {
+  //   // 1.把table里面的数据生成worksheet
+  //   let wroksheet = XLSX.utils.json_to_sheet(this.state.mangerstudentAll);
+
+  //   // 2.把worksheet放到workbook里
+  //   let workbook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(workbook, wroksheet);
+  //   XLSX.utils.book_append_sheet(workbook, wroksheet);
+  //   XLSX.utils.book_append_sheet(workbook, wroksheet);
+  //   XLSX.utils.book_append_sheet(workbook, wroksheet);
+  //   XLSX.utils.book_append_sheet(workbook, wroksheet);
+
+
+
+  //   XLSX.writeFile(workbook, '学生名单.xlsx');
+  // }
+
+  // uploadExcel = (e: any) => {
+  //   console.log('e...', e.target, e.target.files);
+  //   let reader = new FileReader();
+  //   reader.onload = function (e: any) {
+  //     var data = new Uint8Array(e.target.result);
+  //     var workbook = XLSX.read(data, { type: 'array' });
+  //     console.log('workbook...', workbook);
+
+  //     var ws = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+  //     console.log('data...', ws);
+  //   }
+
+    // reader.readAsArrayBuffer(e.target.files[0]);
+  // }
 
   public render() {
     let { mangerstudentAll, subjectAll, mangergradeAll } = this.state;
@@ -201,6 +226,8 @@ class ClassMangement extends React.Component<Props> {
                 }
               })(<Button onClick={this.reset}>重置</Button>)}
             </Form.Item>
+            {/* <input type="file" accept=".xlsx" onChange={this.uploadExcel} />
+            <Button onClick={this.exportExcel}>导出数据</Button> */}
           </Form>
         </div>
         <div
