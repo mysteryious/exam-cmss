@@ -80,7 +80,6 @@ class questionsType extends React.Component<PropInto>{
       question_ids: JSON.stringify(ids)
     })
 
-    // console.log(data)
     if (data.code != 1) {
       message.error(data.msg, 1)
     } else {

@@ -58,7 +58,6 @@ class vipCorrect extends React.Component<Props> {
     }
   };
   detail(text:any){
-    console.log(text.exam_student_id)
     this.props.history.push({pathname:'/main/detail',query:{id:text.exam_student_id}})
   }
   public componentDidMount() {

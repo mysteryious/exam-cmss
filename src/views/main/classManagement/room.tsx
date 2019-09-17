@@ -27,7 +27,6 @@ class ClassMangement extends React.Component<Props> {
       title: "您要修改吗？",
       content: "确定要删除此教室吗？",
       onOk: async () => {
-        console.log("queding ");
         const subject = await this.props.room.deletemangerroom({
           room_id: text.room_id
         });
@@ -63,14 +62,12 @@ class ClassMangement extends React.Component<Props> {
     //添加教室号接口
     const subject = await this.props.room.addmangerroom({ room_text: roomVal });
     this.getList();
-    // console.log(subject)
     this.setState({
       visible: false
     });
   };
   //取消按钮
   handleCancel = (e: any) => {
-    // console.log(e.target.value);
     this.setState({
       visible: false
     });

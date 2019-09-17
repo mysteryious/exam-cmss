@@ -32,7 +32,6 @@ class ClassMangement extends React.Component<Props, any> {
   public getList = async () => {
     //获取已经分配教室的班级
     const subject = await this.props.grade.getmangergrade();
-    // console.log(subject)
     subject.data.map((item: any, index: number) => (item.key = index));
     this.setState({ data: subject.data });
   };
@@ -40,14 +39,12 @@ class ClassMangement extends React.Component<Props, any> {
   public getsubjectAll = async () => {
     //获取全部教室
     const subject = await this.props.room.getmangerroom();
-    // console.log(subject)
     this.setState({ subjectAll: subject.data });
   };
 
   public getSubject = async () => {
     //获取所有的课程
     const subject = await this.props.grade.getexamsubject();
-    // console.log(subject)
     this.setState({ examsubjectArr: subject.data });
   };
 
@@ -118,7 +115,6 @@ class ClassMangement extends React.Component<Props, any> {
 
   //点击修改按钮
   amend = async (text: any) => {
-    // console.log(text)
     this.setState({
       visible: true,
       disabled: true,

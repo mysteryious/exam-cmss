@@ -35,7 +35,6 @@ class questionsType extends React.Component<PropInto>{
       });
     } else {
       result = await this.props.examlist.examDetail(this.props.match.params.id);
-      console.log(this.props.match.params.id,result)
     }
     this.setState({
       dataSource: result.data

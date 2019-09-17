@@ -2,7 +2,7 @@ import axios from "axios"
 import { getToken } from './cookie';
 const Url = {
   '123.206.55.50': "//exam.jasonandjay.com",
-  '127.0.0.1': '//169.254.155.234:7001',
+  '127.0.0.1:5500': '//169.254.195.113:7001',
   'jasonandjay.com':"//exam.jasonandjay.com"
 }
 

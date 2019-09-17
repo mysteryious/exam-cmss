@@ -10,7 +10,6 @@ class addQuestions {
   }
   //添加试题
   @action async addingQuestions(params: object): Promise<any> {
-   // console.log(params)
     let result: any = await addingQuestions(params);
     return result
   }
